@@ -1,34 +1,30 @@
 'use strict';
 const mongoose = require('../../database');
-const User = mongoose.model('User');
+const userModel = mongoose.model('User');
 
 exports.get = async (data) => {
-    const user = await User.findOne(data);
+    const user = await userModel.findOne(data);
 
     return user;
 };
 
 exports.getUserAuth = async (data) => {
-    const user = await User.findOne(data).select('+password');
-
-    return user;
+    return await userModel.findOne(data).select('+password');
 };
 
 exports.getUserReset = async (data) => {
-    const user = await User.findOne(data).select('+passwordResetToken passwordResetExpires');
-
-    return user;
+    return await userModel.findOne(data).select('+password passwordResetToken passwordResetExpires');
 };
 
 exports.post = async (data) => {
-    const user = new User(data);
+    const user = new userModel(data);
     await user.save();
 
     return user.id
 };
 
 exports.put = async (id, data) => {
-    const user = await User.findByIdAndUpdate(id, data);
+    const user = await userModel.findByIdAndUpdate(id, data);
 
     return user;
 };

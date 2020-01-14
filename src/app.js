@@ -13,18 +13,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(cors());
 
-app.use(
-  "/files",
-  express.static(path.resolve(__dirname, "..", "tmp", "uploads"))
-);
-
 //Carregando as Models
-const user = require('./app/model/User');
-const slideshow = require('./app/model/slideshow');
+require('./app/model/User');
+require('./app/model/slideshow');
 
 // Carrega as rotas
 const copyright = require('./routes/copyright');
-const slideshowRoutes = require('./routes/postSlideshowRouts');
+const slideshowRoutes = require('./routes/slideshowRouts');
 const authRoutes = require('./routes/authRoutes');
 
 app.use(function (req, res, next) {

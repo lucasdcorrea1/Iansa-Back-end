@@ -1,13 +1,13 @@
 
 'use strict';
-const bcrypt = require('bcryptjs');
+
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 
 exports.generateToken = async (params) => {
-   const token = jwt.sign(params, process.env.AUTH, {
-    expiresIn: 43200
-});
-    return token;
+    return jwt.sign(params, process.env.AUTH, {
+        expiresIn: 43200
+    });
 };
 
