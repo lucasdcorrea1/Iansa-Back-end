@@ -1,9 +1,12 @@
 'use strict'
 require('dotenv/config');
-const authRepository = require('../../Repositories/authRepository');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+
+const authRepository = require('../../Repositories/authRepository');
+const mailer = require('../../../Modules/mailer');
+const jwtService = require('../../Services/jwtServices');
 
 module.exports = {
     async authenticate(req, res) {

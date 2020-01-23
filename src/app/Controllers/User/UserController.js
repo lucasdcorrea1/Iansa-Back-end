@@ -1,5 +1,6 @@
 'use strict'
 require('dotenv/config');
+
 const mailer = require('../../../Modules/mailer');
 const authRepository = require('../../Repositories/authRepository');
 const jwtService = require('../../Services/jwtServices');
