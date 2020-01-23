@@ -10,6 +10,6 @@ router.get("/getAll",  controller.getImage);
 
 router.use(authMiddleware);
 router.post("/create", multer(multerConfig).single("file"), controller.post);
-router.delete("/posts/:id", controller.delete);
+// router.delete("/posts/:id", controller.delete);
 
 module.exports = router;
