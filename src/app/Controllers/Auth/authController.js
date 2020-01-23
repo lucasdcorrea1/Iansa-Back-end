@@ -1,65 +1,11 @@
 'use strict'
-
 require('dotenv/config');
+const authRepository = require('../../Repositories/authRepository');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 
-const mailer = require('../../modules/mailer');
-const authRepository = require('../repositories/authRepository');
-const jwtService = require('../services/jwtServices')
-const validations = require('../validations/Validate');
-
 module.exports = {
-    async register(req, res) {
-        try {
-            const userData = {
-                name: req.body.name.trim(),
-                email: req.body.email.trim(),
-                password: req.body.password
-            };
-            const name = userData.name;
-
-            if (!validations.validateEmailAddress(userData.email))
-                return res.status(400).send({
-                    error: 'E-mail inválido'
-                });
-
-            if (await authRepository.get({ "email": userData.email }))
-                return res.status(400).send({
-                    error: 'Usuário já cadastrado'
-                });
-
-            const userId = await authRepository.post(userData);
-            const token = await jwtService.generateToken({
-                id: userId
-            });
-
-            mailer.sendMail({
-                to: userData.email,
-                from: '"IANSA" <no-reply@datatongji@gmail.com>',
-                subject: 'Registro finalizado!',
-                template: 'auth/new_user',
-                context: { name }
-            }, (error) => {
-                if (error)
-                    return res.status(400).send({
-                        error: `${error} Cannot send forgot password email`
-                    });
-                return res.status(200).send({ token: token });
-            });
-
-            return res.status(200).send({
-                token: token
-            });
-
-        } catch (error) {
-            res.status(400).send({
-                error: `Erro oa realizar cadastro ${error}`
-            });
-        }
-    },
-
     async authenticate(req, res) {
         const {
             email,
@@ -100,8 +46,8 @@ module.exports = {
     },
 
     async forgotPassword(req, res) {
-        try {
             const { email } = req.body
+        try {
             const user = await authRepository.get({ email: email.trim() });
 
             if (!user)
@@ -147,12 +93,7 @@ module.exports = {
     },
 
     async resetPassword(req, res) {
-        const {
-            email,
-            token,
-            password
-        } = req.body
-
+        const { email, token, password } = req.body
         try {
             const user = await authRepository.getUserReset({ email: email.trim() });
             const now = new Date();
@@ -189,42 +130,5 @@ module.exports = {
             })
         }
 
-    },
-
-    async validToken(req, res) {
-        const {
-            email,
-            token
-        } = req.body
-
-        try {
-            const now = new Date();
-            const user = await User.findOne({
-                email
-            })
-                .select('+passwordResetToken passwordResetExpires');
-
-            if (!user)
-                return res.status(400).send({
-                    error: 'Usuário inválido!'
-                });
-
-            if (token !== user.passwordResetToken)
-                return res.status(400).send({
-                    error: 'Token inválido!'
-                });
-
-
-            if (!now > user.passwordResetExpires)
-                return res.status(400).send({
-                    error: 'Token expirado!'
-                })
-
-            return res.status(200).send(JSON.stringify('Tokem válido!'));
-        } catch (err) {
-            res.status(400).send({
-                error: 'Erro ao resetar password'
-            })
-        }
-    },
+    }
 };

@@ -2,8 +2,8 @@
 const express = require('express');
 const router = express.Router();
 const multer = require("multer");
-const controller = require('../App/Controllers/Slideshow/SlideshowController');
-const multerConfig = require("../Config/multer");
+const controller = require('../App/Controllers/Transparency/transparency');
+const multerConfig = require("../config/multer");
 const authMiddleware = require('../Middlewares/auth');
 
 router.get("/getAll",  controller.getImage);

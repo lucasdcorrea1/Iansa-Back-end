@@ -1,6 +1,4 @@
-
 'use strict';
-
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
@@ -10,4 +8,3 @@ exports.generateToken = async (params) => {
         expiresIn: 43200
     });
 };
-
