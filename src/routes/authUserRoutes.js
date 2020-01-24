@@ -1,8 +1,9 @@
 'use strict'
 const express = require('express');
 const router = express.Router();
+
 const authController = require('../app/controllers/Auth/authController');
-const userController = require('../App/Controllers/User/UserController');
+const userController = require('../App/Controllers/User/userController');
 const authMiddleware = require('../Middlewares/auth');
 
 router.post('/authenticate', authController.authenticate);

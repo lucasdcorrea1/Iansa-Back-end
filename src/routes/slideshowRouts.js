@@ -1,8 +1,9 @@
 'use strict'
 const express = require('express');
-const router = express.Router();
 const multer = require("multer");
-const controller = require('../App/Controllers/Slideshow/SlideshowController');
+const router = express.Router();
+
+const controller = require('../App/Controllers/Slideshow/slideshowController');
 const multerConfig = require("../Config/multer");
 const authMiddleware = require('../Middlewares/auth');
 
