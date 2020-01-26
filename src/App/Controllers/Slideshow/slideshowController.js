@@ -10,7 +10,7 @@ module.exports = {
       var postsValidados = []
       
       if (posts) {
-        var dateNow = new Date();
+        const dateNow = new Date();
 
         posts.forEach(item => {
           if(validateDate.compareDate(dateNow, item.expirationDate)){
@@ -30,7 +30,7 @@ module.exports = {
     try {
       const { originalname: name, size, key, location: url = "" } = req.file;
       const { expirationDate, title, description } = req.body;
-
+   
       const post = await slideshowModel.create({
         expirationDate,
         title,

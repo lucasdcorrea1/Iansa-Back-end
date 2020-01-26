@@ -15,6 +15,10 @@ const slideshowSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  description: {
+    type: String,
+    require: true,
+  },
   name: String,
   key: String,
   url: String,
