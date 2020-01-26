@@ -1,4 +1,5 @@
 'use strict'
+
 exports.compareDate = function (dateNow, dateCompare) {
     if (dateNow.getYear() > dateCompare.getYear())
         return false;
