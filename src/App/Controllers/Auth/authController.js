@@ -51,7 +51,6 @@ module.exports = {
     async forgotPassword(req, res) {
         try {
             const { email } = req.body
-
             const user = await authRepository.get({ email: email.trim() });
 
             if (!user)
@@ -82,16 +81,16 @@ module.exports = {
             }, (error) => {
                 if (error)
                     return res.status(400).send({
-                        error: `Não foi possível enviar o e-mail para recuperação de senha: ${error}`
+                        error: `Não foi possível enviar o e-mail para recuperação de senha: ${error} - ${process.env.MAIL_PASS}`
                     });
                 return res.status(200).send(
-                    JSON.stringify(`Enviamos o token de autorização para o e-mail ${email.trim()}`)
+                    JSON.stringify(`Enviamos o token de autorização para o e-mail ${email.trim()} - - ${process.env.MAIL_PASS} `)
                 );
             });
 
         } catch (error) {
             return res.status(400).send({
-                error: `Erro ao solisitar troca de senha ${error}`
+                error: `Erro ao solicitar troca de senha ${error} - - ${process.env.MAIL_PASS}`
             });
         };
     },
