@@ -76,24 +76,22 @@ module.exports = {
                 from: '"IANSA" <no-reply@datatongji@gmail.com>',
                 subject: 'Resetar senha',
                 template: 'auth/forgot_password',
-                context: {
+                context: { 
                     token,
-                    name
-                },
-            }, (err) => {
-                if (err)
-                    return res.status(400).send(
-                        {error: `Não foi possível enviar o e-mail para recuperação de senha: ${err}`}
-                    );
-
+                    name }
+            }, (error) => {
+                if (error)
+                    return res.status(400).send({
+                        error: `Não foi possível enviar o e-mail para recuperação de senha: ${error}`
+                    });
                 return res.status(200).send(
                     JSON.stringify(`Enviamos o token de autorização para o e-mail ${email.trim()}`)
                 );
             });
 
-        } catch (err) {
+        } catch (error) {
             return res.status(400).send({
-                error: `Erro ao solisitar troca de senha ${err}`
+                error: `Erro ao solisitar troca de senha ${error}`
             });
         };
     },
