@@ -70,41 +70,30 @@ module.exports = {
                     passwordResetExpires: now,
                 }
             });
-            
-            try {
-                mailer.sendMail({
-                    to: email.trim(),
-                    from: '"IANSA" <no-reply@datatongji@gmail.com>',
-                    subject: 'Resetar senha',
-                    template: 'auth/forgot_password',
-                    context: {
-                        token,
-                        name
-                    },
-                }, (err) => {
-                    if (err)
-                        return res.status(400).send({ 
-                            error:`Não foi possível enviar o e-mail para recuperação de senha: ${err}`
-                            }
-                        );
-    
-                        return res.status(200).send(
-                            JSON.stringify(`Enviamos o token de autorização para o e-mail ${email.trim()}`)
-                        );
-                });
-            } catch (error) {
-                return res.status(400).send({ 
-                    error: `Erro ao solisitar troca de senha ${err}` 
-                });
-            }
 
-            return res.status(200).send(
-                JSON.stringify(`Enviamos o token de autorização para o e-mail ${email.trim()}`)
-            );
+            mailer.sendMail({
+                to: email.trim(),
+                from: '"IANSA" <no-reply@datatongji@gmail.com>',
+                subject: 'Resetar senha',
+                template: 'auth/forgot_password',
+                context: {
+                    token,
+                    name
+                },
+            }, (err) => {
+                if (err)
+                    return res.status(400).send(
+                        {error: `Não foi possível enviar o e-mail para recuperação de senha: ${err}`}
+                    );
+
+                return res.status(200).send(
+                    JSON.stringify(`Enviamos o token de autorização para o e-mail ${email.trim()}`)
+                );
+            });
 
         } catch (err) {
-            return res.status(400).send({ 
-                error: `Erro ao solisitar troca de senha ${err}` 
+            return res.status(400).send({
+                error: `Erro ao solisitar troca de senha ${err}`
             });
         };
     },
