@@ -75,7 +75,7 @@ module.exports = {
                 to: email.trim(),
                 from: '"IANSA" <no-reply@datatongji@gmail.com>',
                 subject: 'Resetar senha',
-                template: 'auth/forgot_password',
+                template: 'Auth/forgot_password',
                 context: { 
                     token,
                     name }

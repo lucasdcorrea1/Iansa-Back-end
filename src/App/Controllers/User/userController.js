@@ -35,7 +35,7 @@ module.exports = {
                 to: userData.email,
                 from: '"IANSA" <no-reply@datatongji@gmail.com>',
                 subject: 'Registro finalizado!',
-                template: 'auth/new_user',
+                template: 'Auth/new_user',
                 context: { name }
             }, (error) => {
                 if (error)
