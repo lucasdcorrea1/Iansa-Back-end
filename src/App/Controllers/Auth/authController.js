@@ -72,7 +72,7 @@ module.exports = {
 
             mailer.sendMail({
                 to: email.trim(),
-                from: '"IANSA" <no-reply@datatongji@gmail.com>',
+                from: '"IANSA" <no-reply@dot.hour@gmail.com>',
                 subject: 'Resetar senha',
                 template: 'Auth/forgot_password',
                 context: { 

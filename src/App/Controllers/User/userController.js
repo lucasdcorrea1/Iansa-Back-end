@@ -33,7 +33,7 @@ module.exports = {
 
             mailer.sendMail({
                 to: userData.email,
-                from: '"IANSA" <no-reply@datatongji@gmail.com>',
+                from: '"IANSA" <no-reply@dot.hour@gmail.com>',
                 subject: 'Registro finalizado!',
                 template: 'Auth/new_user',
                 context: { name }
