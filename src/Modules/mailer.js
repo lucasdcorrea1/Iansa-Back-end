@@ -12,13 +12,16 @@ const pass = process.env.MAIL_PASS;
 const ssl = true;
 
 const transport = nodemailer.createTransport({
-  host,
-  port,
-  ssl,
-  auth: { 
-    user: usr, 
-    pass: pass 
+  host: "smtp-mail.outlook.com", // hostname
+  secureConnection: false, // TLS requires secureConnection to be false
+  port: 587, // port for secure SMTP
+  tls: {
+     ciphers:'SSLv3'
   },
+  auth: {
+      user: usr,
+      pass: pass
+  }
 });
 
 const handlebarOptions = {
