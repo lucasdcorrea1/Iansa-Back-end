@@ -40,13 +40,11 @@ module.exports = {
             }, (error) => {
                 if (error)
                     return res.status(400).send({
-                        error: `${error} Cannot send forgot password email`
+                        error: `Erro os realizar registro de usuário : ${error} `
                     });
-                return res.status(200).send({ token: token });
-            });
-
-            return res.status(200).send({
-                token: token
+                return res.status(200).send({
+                    token: token
+                });
             });
 
         } catch (error) {
