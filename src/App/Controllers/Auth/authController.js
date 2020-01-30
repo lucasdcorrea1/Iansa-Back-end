@@ -81,16 +81,16 @@ module.exports = {
             }, (error) => {
                 if (error)
                     return res.status(400).send({
-                        error: `Não foi possível enviar o e-mail para recuperação de senha: ${error} - ${process.env.MAIL_PASS}`
+                        error: `Não foi possível enviar o e-mail para recuperação de senha: ${error} - ${process.env.MAIL_USER}`
                     });
                 return res.status(200).send(
-                    JSON.stringify(`Enviamos o token de autorização para o e-mail ${email.trim()} - - ${process.env.MAIL_PASS} `)
+                    JSON.stringify(`Enviamos o token de autorização para o e-mail ${email.trim()} - - ${process.env.MAIL_USER} `)
                 );
             });
 
         } catch (error) {
             return res.status(400).send({
-                error: `Erro ao solicitar troca de senha ${error} - - ${process.env.MAIL_PASS}`
+                error: `Erro ao solicitar troca de senha ${error} - - ${process.env.MAIL_USER}`
             });
         };
     },
