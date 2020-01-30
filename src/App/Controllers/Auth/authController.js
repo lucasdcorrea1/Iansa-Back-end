@@ -52,7 +52,7 @@ module.exports = {
             const { email } = req.body
         try {
             const user = await authRepository.get({ email: email.trim() });
-
+            
             if (!user)
                 return res.status(400).send({
                     error: 'Usuário inválido!'
@@ -71,23 +71,30 @@ module.exports = {
                 }
             });
 
-            mailer.sendMail({
-                to: req.body.email.trim(),
-                from: '"IANSA" <no-reply@datatongji@gmail.com>',
-                subject: 'Resetar senha',
-                template: 'auth/forgot_password',
-                context: {
-                    token,
-                    name
-                },
-            }, (error) => {
-                if (error)
-                    return res.status(error.pr).send({
-                        error: `Não é possível enviar o email da senha esquecida: ${error} `
-                    });
+            try {
+                mailer.sendMail({
+                    to: email.trim(),
+                    from: '"IANSA" <no-reply@datatongji@gmail.com>',
+                    subject: 'Resetar senha',
+                    template: 'auth/forgot_password',
+                    context: {
+                        token,
+                        name
+                    },
+                }, (error) => {
+                    if (error)
+                        return res.status(error.pr).send({
+                            error: `Não é possível enviar o email da senha esquecida: ${error} `
+                        });
+    
+                    return res.status(200).send(JSON.stringify(`Enviamos o token de autorizaão para o e-mail ${email.trim()}`));
+                })
+            } catch (error) {
+                return res.status(400).send({
+                    error: `Erro ao tentar solicitar a recuperação de senha: ${error}`
+                });
+            }
 
-                return res.status(200).send(JSON.stringify(`Enviamos o token de autorizaão para o e-mail ${email.trim()}`));
-            })
         } catch (error) {
             return res.status(400).send({
                 error: `Erro ao tentar solicitar a recuperação de senha: ${error}`

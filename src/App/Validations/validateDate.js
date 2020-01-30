@@ -1,6 +1,6 @@
 'use strict'
 
-exports.compareDate = function (dateNow, dateCompare) {
+exports.compareDate = function async(dateNow, dateCompare) {
     if (dateNow.getYear() > dateCompare.getYear())
         return false;
 
