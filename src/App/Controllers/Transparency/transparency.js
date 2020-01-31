@@ -17,11 +17,11 @@ module.exports = {
   async post(req, res) {
     try {
       const { originalname: name, size, key, location: url = "" } = req.file;
-      const { expirationDate, title } = req.body;
+      const { title, description } = req.body;
 
       const post = await transparencyModel.create({
-        expirationDate,
         title,
+        description,
         name,
         size,
         key,

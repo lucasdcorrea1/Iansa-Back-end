@@ -9,10 +9,9 @@ module.exports = {
     },
 
     async post(data) {
-        console.log(`data ${data}`)
-        const test = await slideshow.create({
+        const post = await slideshow.create({
            data
           });
-          return test;
-    },
+          return post;
+    }
 };
