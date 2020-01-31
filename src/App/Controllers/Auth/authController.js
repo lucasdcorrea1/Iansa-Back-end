@@ -6,6 +6,7 @@ const crypto = require('crypto');
 
 const authRepository = require('../../Repositories/authRepository');
 const mailer = require('../../../Modules/mailer');
+const sendgred = require('../../../Modules/emailService');
 const jwtService = require('../../Services/jwtServices');
 
 module.exports = {
@@ -70,24 +71,34 @@ module.exports = {
                 }
             });
 
-            mailer.sendMail({
-                to: email.trim(),
-                from: '"IANSA" <no-reply@dot.hour@gmail.com>',
-                subject: 'Resetar senha',
-                template: 'Auth/forgot_password',
-                context: { 
-                    token,
-                    name }
-            }, (error) => {
-                if (error)
-                    return res.status(400).send({
-                        error: `Não foi possível enviar o e-mail para recuperação de senha: ${error} - ${process.env.MAIL_USER}`
-                    });
+            var tmp = global.EMAIL_TMPL_RESET_PASS.replace('{name}', name)
+            tmp = tmp.replace('{token}', token)
+            sendgred.send(  
+                        email.trim(),
+                        'Resetar senha!',
+                        tmp
+                    );
+
+            // mailer.sendMail({
+            //     to: email.trim(),
+            //     from: '"IANSA" <no-reply@dot.hour@gmail.com>',
+            //     subject: 'Resetar senha',
+            //     template: 'Auth/forgot_password',
+            //     context: { 
+            //         token,
+            //         name }
+            // }, (error) => {
+            //     if (error)
+            //         return res.status(400).send({
+            //             error: `Não foi possível enviar o e-mail para recuperação de senha: ${error} - ${process.env.MAIL_USER}`
+            //         });
+            //     return res.status(200).send(
+            //         JSON.stringify(`Enviamos o token de autorização para o e-mail ${email.trim()} - - ${process.env.MAIL_USER} `)
+            //     );
+            // });
                 return res.status(200).send(
                     JSON.stringify(`Enviamos o token de autorização para o e-mail ${email.trim()} - - ${process.env.MAIL_USER} `)
                 );
-            });
-
         } catch (error) {
             return res.status(400).send({
                 error: `Erro ao solicitar troca de senha ${error} - - ${process.env.MAIL_USER}`
