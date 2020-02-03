@@ -31,7 +31,7 @@ module.exports = {
                 id: userId
             });
 
-            await mailer.sendMail({
+            mailer.sendMail({
                 to: userData.email,
                 from: '"I.A.N.S.A" <datatongji@gmail.com>',
                 subject: "Ben-Vindo!",

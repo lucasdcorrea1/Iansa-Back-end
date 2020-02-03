@@ -77,7 +77,7 @@ module.exports = {
             // } catch (e) {
             //     console.log(e)  // If any error is thrown, you can see the message.
             // }
-            await mailer.sendMail({
+            mailer.sendMail({
                     to: `${email.trim()}`,
                     from: '"I.A.N.S.A" <datatongji@gmail.com>',
                     subject: "reset de senha",
