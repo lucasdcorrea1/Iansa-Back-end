@@ -35,7 +35,7 @@ module.exports = {
                 to: userData.email,
                 from: '"I.A.N.S.A" <datatongji@gmail.com>',
                 subject: "Ben-Vindo!",
-                template: 'auth/new_user',
+                template: 'Auth/new_user',
                 context: { name }
             }).then(message => {
                 console.log(message)
