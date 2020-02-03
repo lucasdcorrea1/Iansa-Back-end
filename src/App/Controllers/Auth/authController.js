@@ -79,10 +79,11 @@ module.exports = {
             // }
             mailer.sendMail({
                     to: `${email.trim()}`,
-                    from: "I.A.N.S.A <datatongji@gmail.com>",
+                    from: "I.A.N.S.A <suporte@iansa.org.br>",
                     subject: "reset de senha",
                     template: 'Auth/forgot_password',
-                    context: {                         name,
+                    context: {                         
+                        name,
                         token
                          }
                 }).then(message => {

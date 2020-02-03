@@ -33,7 +33,7 @@ module.exports = {
 
             mailer.sendMail({
                 to: userData.email,
-                from: "I.A.N.S.A <datatongji@gmail.com>",
+                from: "I.A.N.S.A <suporte@iansa.org.br>",
                 subject: "Ben-Vindo!",
                 template: 'Auth/new_user',
                 context: { name }
