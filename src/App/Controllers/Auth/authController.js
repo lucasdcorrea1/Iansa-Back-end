@@ -62,14 +62,12 @@ module.exports = {
 
             const now = new Date();
             now.setHours(now.getHours() + 1);
-
             await authRepository.put(user.id, {
                 '$set': {
                     passwordResetToken: token,
                     passwordResetExpires: now,
                 }
             });
-
             // try {
             //    const test = fs.readFile('./src/App/Controllers/Auth/teste.txt', function (err, data) {
             //     console.log(data);
@@ -79,9 +77,7 @@ module.exports = {
             // } catch (e) {
             //     console.log(e)  // If any error is thrown, you can see the message.
             // }
-
-            try {
-                mailer.sendMail({
+            await mailer.sendMail({
                     to: `${email.trim()}`,
                     from: '"I.A.N.S.A" <datatongji@gmail.com>',
                     subject: "reset de senha",
@@ -89,20 +85,17 @@ module.exports = {
                     context: {                         name,
                         token
                          }
-                }, (error) => {
-                if (error)
-                    return res.status(400).send({
-                        error: error
-                    })
+                }).then(message => {
+					console.log(message)
+                    return res.status(200).send(
+                        JSON.stringify(`Enviamos o token de autorização para o e-mail ${email.trim()}`)
+                    );
+				}).catch(error => {
+					return res.status(400).send({
+						error: `Erro oa realizar cadastro ${error}`
+					});
                 });
-            } catch (error) {
-                return res.status(400).send({
-                    error: error
-                });
-            }
-            return res.status(200).send(
-                JSON.stringify(`Enviamos o token de autorização para o e-mail ${email.trim()}`)
-            );
+                
         } catch (error) {
             return res.status(400).send({
                 error: `Erro ao solicitar troca de senha ${error}`

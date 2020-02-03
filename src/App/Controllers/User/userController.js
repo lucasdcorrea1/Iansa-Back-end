@@ -31,27 +31,21 @@ module.exports = {
                 id: userId
             });
 
-            try {
-                mailer.sendMail({
-                    to: userData.email,
-                    from: '"I.A.N.S.A" <datatongji@gmail.com>',
-                    subject: "Ben-Vindo!",
-                    template: 'auth/new_user',
-                    context: { name }
-                }, (error) => {
-                    if (error)
-                        return res.status(400).send({
-                            error: error
-                        })
-                    });
-            } catch (error) {
-                return res.status(400).send({
-                    error: error
+            await mailer.sendMail({
+                to: userData.email,
+                from: '"I.A.N.S.A" <datatongji@gmail.com>',
+                subject: "Ben-Vindo!",
+                template: 'auth/new_user',
+                context: { name }
+            }).then(message => {
+                console.log(message)
+                return res.status(200).send({
+                    token: token
                 });
-            };
-                    
-            return res.status(200).send({
-                token: token
+            }).catch(error => {
+                return res.status(400).send({
+                    error: `Erro oa realizar cadastro ${error}`
+                });
             });
 
         } catch (error) {
