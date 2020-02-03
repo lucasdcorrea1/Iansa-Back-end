@@ -33,16 +33,18 @@ module.exports = {
 
             mailer.sendMail({
                 to: userData.email,
-                from: '"I.A.N.S.A" <datatongji@gmail.com>',
+                from: "I.A.N.S.A <datatongji@gmail.com>",
                 subject: "Ben-Vindo!",
                 template: 'Auth/new_user',
                 context: { name }
             }).then(message => {
                 console.log(message)
                 return res.status(200).send({
-                    token: token
+                    message,
+                    token
                 });
             }).catch(error => {
+                console.log(error)
                 return res.status(400).send({
                     error: `Erro oa realizar cadastro ${error}`
                 });

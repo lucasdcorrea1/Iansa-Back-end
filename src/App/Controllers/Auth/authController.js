@@ -79,7 +79,7 @@ module.exports = {
             // }
             mailer.sendMail({
                     to: `${email.trim()}`,
-                    from: '"I.A.N.S.A" <datatongji@gmail.com>',
+                    from: "I.A.N.S.A <datatongji@gmail.com>",
                     subject: "reset de senha",
                     template: 'Auth/forgot_password',
                     context: {                         name,
@@ -88,9 +88,10 @@ module.exports = {
                 }).then(message => {
 					console.log(message)
                     return res.status(200).send(
-                        JSON.stringify(`Enviamos o token de autorização para o e-mail ${email.trim()}`)
+                        JSON.stringify(`Enviamos o token de autorização para o e-mail ${message}`)
                     );
 				}).catch(error => {
+                    console.log(error)
 					return res.status(400).send({
 						error: `Erro oa realizar cadastro ${error}`
 					});
