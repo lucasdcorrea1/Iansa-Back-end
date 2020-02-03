@@ -32,7 +32,7 @@ module.exports = {
             });
 
             try {
-                await mailer.sendMail({
+                mailer.sendMail({
                     to: userData.email,
                     from: '"I.A.N.S.A" <datatongji@gmail.com>',
                     subject: "Ben-Vindo!",
@@ -45,7 +45,6 @@ module.exports = {
                         })
                     });
             } catch (error) {
-                console.log("tese" +error )
                 return res.status(400).send({
                     error: error
                 });

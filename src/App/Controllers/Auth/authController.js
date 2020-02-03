@@ -81,20 +81,18 @@ module.exports = {
             // }
 
             try {
-              
-                await mailer.sendMail({
+                mailer.sendMail({
                     to: `${email.trim()}`,
                     from: '"I.A.N.S.A" <datatongji@gmail.com>',
                     subject: "reset de senha",
                     template: 'auth/forgot_password',
-                    context: { 
-                        name,
+                    context: {                         name,
                         token
                          }
-                }, (er) => {
-                if (er)
+                }, (error) => {
+                if (error)
                     return res.status(400).send({
-                        error: er
+                        error: error
                     })
                 });
             } catch (error) {
@@ -102,7 +100,6 @@ module.exports = {
                     error: error
                 });
             }
-
             return res.status(200).send(
                 JSON.stringify(`Enviamos o token de autorização para o e-mail ${email.trim()}`)
             );
