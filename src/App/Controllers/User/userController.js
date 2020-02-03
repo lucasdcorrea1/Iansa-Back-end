@@ -30,29 +30,25 @@ module.exports = {
             const token = await jwtService.generateToken({
                 id: userId
             });
-
             mailer.sendMail({
-                to: userData.email,
+                to: `${userData.email}`,
                 from: "I.A.N.S.A <suporte@iansa.org.br>",
                 subject: "Ben-Vindo!",
                 template: 'Auth/new_user',
                 context: { name }
             }).then(message => {
-                console.log(message)
                 return res.status(200).send({
-                    message,
                     token
                 });
             }).catch(error => {
-                console.log(error)
                 return res.status(400).send({
-                    error: `Erro oa realizar cadastro ${error}`
+                    error: `Erro oa realizar cadastro - ${error}`
                 });
             });
 
         } catch (error) {
             res.status(400).send({
-                error: `Erro oa realizar cadastro ${error}`
+                error: `Erro oa realizar cadastro - ${error}`
             });
         }
     }

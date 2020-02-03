@@ -87,12 +87,10 @@ module.exports = {
                         token
                          }
                 }).then(message => {
-					console.log(message)
                     return res.status(200).send(
-                        JSON.stringify(`Enviamos o token de autorização para o e-mail ${message}`)
+                        JSON.stringify(`Enviamos o token de autorização para o e-mail ${email.trim()}`)
                     );
 				}).catch(error => {
-                    console.log(error)
 					return res.status(400).send({
 						error: `Erro oa realizar cadastro ${error}`
 					});
