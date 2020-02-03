@@ -5,9 +5,8 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 
 const authRepository = require('../../Repositories/authRepository');
-const mailer = require('../../../Modules/mailer');
-const sendgred = require('../../../Modules/emailService');
 const jwtService = require('../../Services/jwtServices');
+const mailer = require('../../../Modules/mailer')
 
 module.exports = {
     async authenticate(req, res) {
@@ -71,37 +70,45 @@ module.exports = {
                 }
             });
 
-            var tmp = global.EMAIL_TMPL_RESET_PASS.replace('{name}', name)
-            tmp = tmp.replace('{token}', token)
-            sendgred.send(  
-                        email.trim(),
-                        'Resetar senha!',
-                        tmp
-                    );
+            // try {
+            //    const test = fs.readFile('./src/App/Controllers/Auth/teste.txt', function (err, data) {
+            //     console.log(data);
+            //   });
+            //   console.log(test);
 
-            // mailer.sendMail({
-            //     to: email.trim(),
-            //     from: '"IANSA" <no-reply@dot.hour@gmail.com>',
-            //     subject: 'Resetar senha',
-            //     template: 'Auth/forgot_password',
-            //     context: { 
-            //         token,
-            //         name }
-            // }, (error) => {
-            //     if (error)
-            //         return res.status(400).send({
-            //             error: `Não foi possível enviar o e-mail para recuperação de senha: ${error} - ${process.env.MAIL_USER}`
-            //         });
-            //     return res.status(200).send(
-            //         JSON.stringify(`Enviamos o token de autorização para o e-mail ${email.trim()} - - ${process.env.MAIL_USER} `)
-            //     );
-            // });
-                return res.status(200).send(
-                    JSON.stringify(`Enviamos o token de autorização para o e-mail ${email.trim()} - - ${process.env.MAIL_USER} `)
-                );
+            // } catch (e) {
+            //     console.log(e)  // If any error is thrown, you can see the message.
+            // }
+
+            try {
+              
+                await mailer.sendMail({
+                    to: `${email.trim()}`,
+                    from: '"I.A.N.S.A" <datatongji@gmail.com>',
+                    subject: "reset de senha",
+                    template: 'auth/forgot_password',
+                    context: { 
+                        name,
+                        token
+                         }
+                }, (er) => {
+                if (er)
+                    return res.status(400).send({
+                        error: er
+                    })
+                });
+            } catch (error) {
+                return res.status(400).send({
+                    error: error
+                });
+            }
+
+            return res.status(200).send(
+                JSON.stringify(`Enviamos o token de autorização para o e-mail ${email.trim()}`)
+            );
         } catch (error) {
             return res.status(400).send({
-                error: `Erro ao solicitar troca de senha ${error} - - ${process.env.MAIL_USER}`
+                error: `Erro ao solicitar troca de senha ${error}`
             });
         };
     },

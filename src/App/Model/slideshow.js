@@ -25,8 +25,7 @@ const slideshowSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now,
-  },
-  techs: [String],
+  }
 });
 
 slideshowSchema.pre('save', function () {

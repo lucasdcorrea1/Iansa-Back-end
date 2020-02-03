@@ -31,31 +31,29 @@ module.exports = {
                 id: userId
             });
 
-            var tmp = global.EMAIL_TMPL_REGISTER.replace('{name}', name)
-            sendgred.send(  
-                        email.trim(),
-                        'Resetar senha!',
-                        tmp
-                    );
+            try {
+                await mailer.sendMail({
+                    to: userData.email,
+                    from: '"I.A.N.S.A" <datatongji@gmail.com>',
+                    subject: "Ben-Vindo!",
+                    template: 'auth/new_user',
+                    context: { name }
+                }, (error) => {
+                    if (error)
+                        return res.status(400).send({
+                            error: error
+                        })
+                    });
+            } catch (error) {
+                console.log("tese" +error )
+                return res.status(400).send({
+                    error: error
+                });
+            };
                     
             return res.status(200).send({
                 token: token
             });
-            // mailer.sendMail({
-            //     to: userData.email,
-            //     from: '"IANSA" <no-reply@dot.hour@gmail.com>',
-            //     subject: 'Registro finalizado!',
-            //     template: 'Auth/new_user',
-            //     context: { name }
-            // }, (error) => {
-            //     if (error)
-            //         return res.status(400).send({
-            //             error: `Erro os realizar registro de usuário : ${error} `
-            //         });
-            //     return res.status(200).send({
-            //         token: token
-            //     });
-            // });
 
         } catch (error) {
             res.status(400).send({

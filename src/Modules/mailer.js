@@ -9,10 +9,11 @@ const host = process.env.MAIL_HOST;
 const port = process.env.MAIL_PORT;
 const usr = process.env.MAIL_USER;
 const pass = process.env.MAIL_PASS;
-const ssl = true;
 
 const transport = nodemailer.createTransport({
-  service: "gmail",
+  host: host,
+  port: port,
+  secure: true,
   auth: {
     user: usr,
     pass: pass

@@ -19,7 +19,7 @@ module.exports = {
           });
         });
       };
-      
+       
       return res.status(200).json(formatedPost);
     } catch (error) {
       res.status(400).send({
