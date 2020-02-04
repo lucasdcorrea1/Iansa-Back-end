@@ -4,7 +4,7 @@ const multer = require("multer");
 const router = express.Router();
 
 const controller = require('../App/Controllers/Slideshow/slideshowController');
-const multerConfig = require("../Config/multer");
+const multerConfig = require("../Middlewares/multer");
 const authMiddleware = require('../Middlewares/auth');
 
 router.get("/getAll",  controller.getImage);

@@ -33,7 +33,11 @@ module.exports = {
             id: user.id,
         });
 
-        return res.status(200).send({ token: token });
+        return res.status(200).send({ 
+            token: token, 
+            name: user.name,
+            email: user.email,
+        });
     },
 
     async authenticateToken(req, res) {
@@ -58,7 +62,7 @@ module.exports = {
                     { error: 'Usuário não encontrado!' });
 
             const token = crypto.randomBytes(20).toString('hex');
-            const name = user.name;
+            // const name = user.name;
 
             const now = new Date();
             now.setHours(now.getHours() + 1);
@@ -77,26 +81,29 @@ module.exports = {
             // } catch (e) {
             //     console.log(e)  // If any error is thrown, you can see the message.
             // }
-            mailer.sendMail({
-                    from: "I.A.N.S.A <iansa.contato@outlook.com>",
-                    to: `${email.trim()}`,
-                    subject: "reset de senha",
-                    template: 'Auth/forgot_password',
-                    context: {                         
-                        name,
-                        token
-                         }
-                }).then(message => {
-                    console.log(message + "message")
-                    return res.status(200).send(
-                        JSON.stringify(`Enviamos o token de autorização para o e-mail ${email.trim()}`)
-                    );
-				}).catch(error => {
-                    console.log(error + "Error")
-					return res.status(400).send(
-						JSON.stringify(`Erro oa realizar cadastro ${error}`)
-					);
-                });
+            // mailer.sendMail({
+            //         from: "I.A.N.S.A <iansa.contato@outlook.com>",
+            //         to: `${email.trim()}`,
+            //         subject: "reset de senha",
+            //         template: 'Auth/forgot_password',
+            //         context: {                         
+            //             name,
+            //             token
+            //              }
+            //     }).then(message => {
+            //         console.log(message + "message")
+            //         return res.status(200).send(
+            //             JSON.stringify(`Enviamos o token de autorização para o e-mail ${email.trim()}`)
+            //         );
+			// 	}).catch(error => {
+            //         console.log(error + "Error")
+			// 		return res.status(400).send(
+			// 			JSON.stringify(`Erro oa realizar cadastro ${error}`)
+			// 		);
+            //     });
+                return res.status(200).send(
+                    JSON.stringify(`Enviamos o token de autorização para o e-mail ${email.trim()}`)
+                );
                 
         } catch (error) {
             return res.status(400).send({
