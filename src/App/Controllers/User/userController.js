@@ -30,9 +30,10 @@ module.exports = {
             const token = await jwtService.generateToken({
                 id: userId
             });
+            console.log(`${userData.email}`)
             mailer.sendMail({
-                to: `${userData.email}`,
                 from: "I.A.N.S.A <suporte@iansa.org.br>",
+                to: `${userData.email}`,
                 subject: "Ben-Vindo!",
                 template: 'Auth/new_user',
                 context: { name }

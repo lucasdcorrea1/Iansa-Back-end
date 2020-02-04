@@ -78,8 +78,8 @@ module.exports = {
             //     console.log(e)  // If any error is thrown, you can see the message.
             // }
             mailer.sendMail({
+                    from: "I.A.N.S.A <iansa.contato@outlook.com>",
                     to: `${email.trim()}`,
-                    from: "I.A.N.S.A <suporte@iansa.org.br>",
                     subject: "reset de senha",
                     template: 'Auth/forgot_password',
                     context: {                         
@@ -87,13 +87,15 @@ module.exports = {
                         token
                          }
                 }).then(message => {
+                    console.log(message + "message")
                     return res.status(200).send(
                         JSON.stringify(`Enviamos o token de autorização para o e-mail ${email.trim()}`)
                     );
 				}).catch(error => {
-					return res.status(400).send({
-						error: `Erro oa realizar cadastro ${error}`
-					});
+                    console.log(error + "Error")
+					return res.status(400).send(
+						JSON.stringify(`Erro oa realizar cadastro ${error}`)
+					);
                 });
                 
         } catch (error) {
