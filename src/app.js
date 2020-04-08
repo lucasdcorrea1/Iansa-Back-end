@@ -33,8 +33,8 @@ app.use('/slideshow', require('./Routes/slideshowRouts'));
 app.use('/transparency', require('./Routes/transparencyRouts'));
 app.use('/auth', require('./Routes/authUserRoutes'));
 
-// const PORT = process.env.PORT || 3000;
-// app.listen(PORT, () => {
-// });
+const PORT = process.env.PORT || 3333;
+app.listen(PORT, () => {
+});
 
-module.exports = app;
+// module.exports = app;
