@@ -2,7 +2,6 @@
 require('dotenv/config');
 const envFile = process.env.NODE_ENV === 'development' ? `.env.dev` : '.env';
 require("dotenv").config({ path: `./env/${envFile}` });
-console.log(process.env.APP_NAME)
 
 const express = require('express');
 const cors = require('cors');
@@ -20,7 +19,7 @@ require('./App/Transparency/Model/transparency');
 
 
 app.use(function (req, res, next) {
-  var origin = req.get('origin'); 
+  var origin = req.get('origin');
   res.header('Access-Control-Allow-Origin', origin);
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   res.header('Access-Control-Allow-Headers', 'Content-Type');
@@ -28,13 +27,12 @@ app.use(function (req, res, next) {
 });
 
 // Carrega as rotas
-app.use('/',  require('./Routes/copyright'));
-app.use('/slideshow', require('./Routes/slideshowRouts'));
-app.use('/transparency', require('./Routes/transparencyRouts'));
-app.use('/auth', require('./Routes/authUserRoutes'));
+app.use('/api/v1', require('./Routes/copyright'));
+app.use('/api/v1/slideshow', require('./Routes/slideshowRouts'));
+app.use('/api/v1/transparency', require('./Routes/transparencyRouts'));
+app.use('/api/v1/user/', require('./Routes/userAuthRouter'));
 
-// const PORT = process.env.PORT || 3000;
-// app.listen(PORT, () => {
-// });
+const PORT = process.env.PORT || 3333;
+app.listen(PORT, () => {});
 
-module.exports = app;
+// module.exports = app;

@@ -1,8 +1,10 @@
 'use strict';
+
+require('dotenv/config');
 const express = require('express');
 const router = express.Router();
 
-var Development = ['IANSA'];
+var Development = [process.env.APP_NAME];
 Development.push({
    'Made by': 'Lucas Damas Corrês',
     GitHub: 'https://github.com/lucasdcorrea1'
