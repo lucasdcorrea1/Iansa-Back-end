@@ -17,6 +17,7 @@ app.use(cors());
 require('./App/User/Model/user');
 require('./App/Slideshow/Model/slideshow');
 require('./App/Transparency/Model/transparency');
+require('./App/Subscriptions/Model/subscriptions');
 
 
 app.use(function (req, res, next) {
@@ -32,6 +33,7 @@ app.use('/',  require('./Routes/copyright'));
 app.use('/slideshow', require('./Routes/slideshowRouts'));
 app.use('/transparency', require('./Routes/transparencyRouts'));
 app.use('/auth', require('./Routes/authUserRoutes'));
+app.use('/subscriptions', require('./Routes/subscriptionsRouts'));
 
 // const PORT = process.env.PORT || 3000;
 // app.listen(PORT, () => {
