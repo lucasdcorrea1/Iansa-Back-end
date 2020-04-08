@@ -2,7 +2,6 @@
 require('dotenv/config');
 const envFile = process.env.NODE_ENV === 'development' ? `.env.dev` : '.env';
 require("dotenv").config({ path: `./env/${envFile}` });
-console.log(process.env.APP_NAME)
 
 const express = require('express');
 const cors = require('cors');
