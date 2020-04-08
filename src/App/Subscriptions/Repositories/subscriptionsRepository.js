@@ -6,8 +6,8 @@ exports.get = async () => {
     return await subscriptionsModel.find();
 };
 
-exports.getByEmail = async (data) => {
-    const subscriptions = await subscriptionsModel.find(data);
+exports.getByEmail = async (email) => {
+    const subscriptions = await subscriptionsModel.findOne({email});
 
     return subscriptions;
 };

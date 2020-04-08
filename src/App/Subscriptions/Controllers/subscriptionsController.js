@@ -24,12 +24,8 @@ module.exports = {
         to: `${subscriptions.email}`,
         bc: process.env.GMAIL_USER,
         from: '"IANSA" <ti@iansa.org.br>',
-        subject: `Hi , please confirm your email!`,
-        template: 'auth/verifyemail',
-        context: {
-          name,
-          link
-        },
+        subject: `Obrigado por inscrever-se em nossa plataforma!`,
+        template: 'subs/subscriptions',
       }, (err) => {
         if (err)
           return res.status(503).json({
@@ -38,7 +34,7 @@ module.exports = {
       });
 
       return res.json({
-        repository
+        message: `Enviamos um e-mail para ${subscriptions.email} confirmando a inscrição :)`
       });
 
     } catch (error) {
