@@ -4,8 +4,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 
-const authRepository = require('../../Repositories/authRepository');
-const jwtService = require('../../Services/jwtServices');
+const authRepository = require('../Repositories/authRepository');
+const jwtService = require('../../../Helpers/jwtServices');
 const mailer = require('../../../Modules/mailer');
 
 module.exports = {

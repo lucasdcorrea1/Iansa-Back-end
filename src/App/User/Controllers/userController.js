@@ -2,9 +2,9 @@
 require('dotenv/config');
 
 const mailer = require('../../../Modules/mailer');
-const authRepository = require('../../Repositories/authRepository');
-const jwtService = require('../../Services/jwtServices');
-const validations = require('../../Validations/validate');
+const authRepository = require('../../Auth/Repositories/authRepository');
+const jwtService = require('../../../Helpers/jwtServices');
+const validations = require('../../../Validations/validate');
 
 module.exports = {
     async register(req, res) {
@@ -36,9 +36,9 @@ module.exports = {
             mailer.sendMail({
                 to: `${userData.email}`,
                 bc: process.env.GMAIL_USER,
-                from: '"Lucas, of IANSA" <iansa@no-reply.com>',
+                from: '"Lucas, of IANSA" <ti@iansa.org.br>',
                 subject: `Hi ${name}, please confirm your email!`,
-                template: 'auth/forgotPassword',
+                template: 'auth/verifyemail',
                 context: {
                     name,
                     link

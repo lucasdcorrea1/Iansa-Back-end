@@ -1,26 +1,23 @@
 'use strict'
 require('dotenv/config');
+const envFile = process.env.NODE_ENV === 'development' ? `.env.dev` : '.env';
+require("dotenv").config({ path: `./env/${envFile}` });
+console.log(process.env.APP_NAME)
 
 const express = require('express');
-const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false}));
+app.use(express.json());
 app.use(cors());
 
-//Carregando as Models
-require('./App/Model/user');
-require('./App/Model/slideshow');
-require('./App/Model/transparency');
 
-// Carrega as rotas
-const copyright = require('./Routes/copyright');
-const slideshowRoutes = require('./Routes/slideshowRouts');
-const transparency = require('./Routes/transparencyRouts');
-const authRoutes = require('./Routes/authUserRoutes');
+//Carregando as Models
+require('./App/User/Model/user');
+require('./App/Slideshow/Model/slideshow');
+require('./App/Transparency/Model/transparency');
+
 
 app.use(function (req, res, next) {
   var origin = req.get('origin'); 
@@ -30,18 +27,14 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use('/', copyright);
-app.use('/slideshow', slideshowRoutes);
-app.use('/transparency', transparency);
-app.use('/auth', authRoutes);
+// Carrega as rotas
+app.use('/',  require('./Routes/copyright'));
+app.use('/slideshow', require('./Routes/slideshowRouts'));
+app.use('/transparency', require('./Routes/transparencyRouts'));
+app.use('/auth', require('./Routes/authUserRoutes'));
 
-// var http = require('http');
+// const PORT = process.env.PORT || 3000;
+// app.listen(PORT, () => {
+// });
 
-// http.createServer(function (req, res) {
-//     var xff = req.headers['x-forwarded-for'];
-//     // ...
-// }).listen(process.env.PORT); 
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-});
+module.exports = app;
