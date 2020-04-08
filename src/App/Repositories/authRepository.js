@@ -25,6 +25,7 @@ exports.post = async (data) => {
 
 exports.put = async (id, data) => {
     const user = await userModel.findByIdAndUpdate(id, data);
+    // await user.save();
 
     return user;
 };

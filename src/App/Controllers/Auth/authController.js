@@ -6,7 +6,7 @@ const crypto = require('crypto');
 
 const authRepository = require('../../Repositories/authRepository');
 const jwtService = require('../../Services/jwtServices');
-const mailer = require('../../../Modules/mailer')
+const mailer = require('../../../Modules/mailer');
 
 module.exports = {
     async authenticate(req, res) {
@@ -33,8 +33,8 @@ module.exports = {
             id: user.id,
         });
 
-        return res.status(200).send({ 
-            token: token, 
+        return res.status(200).send({
+            token: token,
             name: user.name,
             email: user.email,
         });
@@ -53,16 +53,16 @@ module.exports = {
     },
 
     async forgotPassword(req, res) {
+        const { email } = req.body
+        const user = await authRepository.get({ email: email.trim() });
         try {
-            const { email } = req.body
-            const user = await authRepository.get({ email: email.trim() });
 
             if (!user)
                 return res.status(400).send(
                     { error: 'Usuário não encontrado!' });
 
             const token = crypto.randomBytes(20).toString('hex');
-            // const name = user.name;
+            const name = user.name;
 
             const now = new Date();
             now.setHours(now.getHours() + 1);
@@ -72,39 +72,26 @@ module.exports = {
                     passwordResetExpires: now,
                 }
             });
-            // try {
-            //    const test = fs.readFile('./src/App/Controllers/Auth/teste.txt', function (err, data) {
-            //     console.log(data);
-            //   });
-            //   console.log(test);
+            const link = 'https://github.com/lucasdcorrea1'
 
-            // } catch (e) {
-            //     console.log(e)  // If any error is thrown, you can see the message.
-            // }
-            // mailer.sendMail({
-            //         from: "I.A.N.S.A <iansa.contato@outlook.com>",
-            //         to: `${email.trim()}`,
-            //         subject: "reset de senha",
-            //         template: 'Auth/forgot_password',
-            //         context: {                         
-            //             name,
-            //             token
-            //              }
-            //     }).then(message => {
-            //         console.log(message + "message")
-            //         return res.status(200).send(
-            //             JSON.stringify(`Enviamos o token de autorização para o e-mail ${email.trim()}`)
-            //         );
-			// 	}).catch(error => {
-            //         console.log(error + "Error")
-			// 		return res.status(400).send(
-			// 			JSON.stringify(`Erro oa realizar cadastro ${error}`)
-			// 		);
-            //     });
-                return res.status(200).send(
-                    JSON.stringify(`Enviamos o token de autorização para o e-mail ${email.trim()}`)
-                );
-                
+            mailer.sendMail({
+                to: `dot.hour@gmail.com`,
+                bc: process.env.GMAIL_USER,
+                from: '"IANSA" <ti@iansa.org.br>',
+                subject: `Hi ${name}, please confirm your email!`,
+                template: 'auth/forgotPassword',
+                context: {
+                    name,
+                    link
+                },
+            }, (err) => {
+                if (err)
+                console.log( err.message)
+            });
+            return res.json(
+               {sucess: `Enviamos o token de autorização para o e-mail ${email}`}
+            );
+
         } catch (error) {
             return res.status(400).send({
                 error: `Erro ao solicitar troca de senha ${error}`

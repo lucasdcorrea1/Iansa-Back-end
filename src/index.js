@@ -35,6 +35,13 @@ app.use('/slideshow', slideshowRoutes);
 app.use('/transparency', transparency);
 app.use('/auth', authRoutes);
 
+// var http = require('http');
+
+// http.createServer(function (req, res) {
+//     var xff = req.headers['x-forwarded-for'];
+//     // ...
+// }).listen(process.env.PORT); 
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
 });

@@ -2,18 +2,16 @@
 const express = require('express');
 const router = express.Router();
 
-const object = {
-    nome: 'Lucas Damas Corrêa',
-    idade: '19',
-    profissao: 'Desenvolvedor'
-};
+var Development = ['IANSA'];
+Development.push({
+   'Made by': 'Lucas Damas Corrês',
+    GitHub: 'https://github.com/lucasdcorrea1'
+})
 
-JSON.stringify(object);
 
-const routes = router.get('/', (req, res, next) => {
+const route = router.get('/', (req, res, next) => {
     res.status(200).send({
-        object
+        Development
     });
 });
-
-module.exports = routes;
+module.exports = route;
