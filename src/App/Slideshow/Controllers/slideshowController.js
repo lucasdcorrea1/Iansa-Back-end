@@ -4,34 +4,11 @@ const slideshowRepository = require('../Repositories/slideshow');
 const validateDate = require('../../../Validations/validateDate');
 
 module.exports = {
-  async getImage(req, res) {
-    try {
-      const posts = await slideshowRepository.getAll();
-      var postsValidados = []
-      
-      if (posts) {
-        const dateNow = new Date();
-
-        posts.forEach(item => {
-          
-          if(validateDate.compareDate(dateNow, item.expirationDate)){
-            postsValidados.push(item);
-          }
-        });
-      }
-      return res.status(200).json(postsValidados);
-    } catch (error) {
-      res.status(400).send({
-        error: `Erro ao realizar busca: ${error}`
-      });
-    };
-  },
-
-  async post(req, res) {
+  async create(req, res) {
     try {
       const { originalname: name, size, key, location: url = "" } = req.file;
-      const { expirationDate, title, description,  } = req.body;
-      
+      const { expirationDate, title, description, } = req.body;
+
       const post = await slideshowModel.create({
         expirationDate,
         title,
@@ -42,17 +19,41 @@ module.exports = {
         url
       });
 
-      return res.status(200).send(JSON.stringify(post));
+      return res.json(post);
     } catch (error) {
-      res.status(400).send({
+      res.status(400).json({
         error: `Falha ao cadastrar novo post. ${error}`
       })
     };
   },
 
+  async index(req, res) {
+    try {
+      const posts = await slideshowRepository.getAll();
+      var postsValidados = []
+
+      if (posts) {
+        const dateNow = new Date();
+
+        posts.forEach(item => {
+
+          if (validateDate.compareDate(dateNow, item.expirationDate)) {
+            postsValidados.push(item);
+          }
+        });
+      }
+      return res.json(postsValidados);
+    } catch (error) {
+      res.status(400).json({
+        error: `Erro ao realizar busca - ${error}`
+      });
+    };
+  },
+
   async delete(req, res) {
     const post = await slideshow.findById(req.params.id);
-    return res.status(200).send(await post.remove());
+    await post.remove()
+    return res.status(201).json({ message: 'Slideshow deletado' });
   },
 
 };

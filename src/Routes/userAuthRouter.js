@@ -5,13 +5,12 @@ const authController = require('../App/Auth/Controllers/authController');
 const userController = require('../App/User/Controllers/userController');
 const authMiddleware = require('../Middlewares/auth');
 
-router.post('/authenticate', authController.authenticate);
-router.post('/authenticatetoken', authController.authenticateToken);
+router.post('/auth', authController.authenticate);
+// router.post('/authenticatetoken', authController.authenticateToken);
 router.post('/forgotpassword', authController.forgotPassword);
 
 router.put('/resetpassword', authController.resetPassword);
 
-router.use(authMiddleware);
-router.post('/register', userController.register);
+router.post('/register', authMiddleware, userController.create);
 
 module.exports = router;

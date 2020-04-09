@@ -72,24 +72,26 @@ module.exports = {
                     passwordResetExpires: now,
                 }
             });
-            const link = 'https://github.com/lucasdcorrea1'
+            const link = 'http://localhost:8080/#/resetpassword'
 
             mailer.sendMail({
-                to: `dot.hour@gmail.com`,
+                to: `${user.email}`,
                 bc: process.env.GMAIL_USER,
                 from: '"IANSA" <ti@iansa.org.br>',
-                subject: `Hi ${name}, please confirm your email!`,
+                subject: `Ei, ${name}, você precisa alterar sua senha?`,
                 template: 'auth/forgotPassword',
                 context: {
                     name,
-                    link
+                    link: `${process.env.APP_URL}resetpassword?token=${await jwtService.generateToken({
+                        id: user.id,
+                    })}&passtoken=${token}`
                 },
             }, (err) => {
                 if (err)
-                console.log( err.message)
+                    console.log(err.message)
             });
             return res.json(
-               {sucess: `Enviamos o token de autorização para o e-mail ${email}`}
+                { sucess: `Enviamos o token de autorização para o e-mail ${email}` }
             );
 
         } catch (error) {
@@ -100,8 +102,20 @@ module.exports = {
     },
 
     async resetPassword(req, res) {
-        const { email, token, password } = req.body
+        const { email, password } = req.body;
+        const passtoken = req.headers.passtoken;
+        const token = req.headers.authorization;
+
+        console.log(passtoken)
+        console.log(token)
         try {
+
+            if (await jwtService.validateToken(token) === false) {
+                return res.status(401).send({
+                    message: 'Invalid token!'
+                });
+            };
+
             const user = await authRepository.getUserReset({ email: email.trim() });
             const now = new Date();
 
@@ -110,14 +124,14 @@ module.exports = {
                     error: 'Usuário inválido!'
                 });
 
-            if (token.trim() !== user.passwordResetToken)
+            if (passtoken.trim() !== user.passwordResetToken)
                 return res.status(400).send({
-                    error: 'Token inválido!'
+                    error: 'Passtoken inválido!'
                 });
 
             if (!now > user.passwordResetExpires)
                 return res.status(400).send({
-                    error: 'Token expirado!'
+                    error: 'Passtoken expirado!'
                 });
 
             if (await bcrypt.compare(password.trim(), user.password))

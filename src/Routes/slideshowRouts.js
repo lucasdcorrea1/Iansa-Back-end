@@ -7,10 +7,10 @@ const controller = require('../App/Slideshow/Controllers/slideshowController');
 const multerConfig = require("../Middlewares/multer");
 const authMiddleware = require('../Middlewares/auth');
 
-router.get("/getAll",  controller.getImage);
+router.get("/",  controller.index);
 
-router.use(authMiddleware);
-router.post("/create", multer(multerConfig).single("file"), controller.post);
-// router.delete("/posts/:id", controller.delete);
+router.post("/", authMiddleware, multer(multerConfig).single("file"), controller.create);
+
+router.delete("/delete/:id", authMiddleware, controller.delete);
 
 module.exports = router;

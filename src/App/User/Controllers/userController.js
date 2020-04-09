@@ -7,7 +7,7 @@ const jwtService = require('../../../Helpers/jwtServices');
 const validations = require('../../../Validations/validate');
 
 module.exports = {
-    async register(req, res) {
+    async create(req, res) {
         try {
             const userData = {
                 name: req.body.name.trim(),
