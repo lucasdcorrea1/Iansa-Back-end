@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const SubscriptionsSchema = new mongoose.Schema({
+const SubscriptionSchema = new mongoose.Schema({
     signup: {
         type: Boolean,
         require: true,
@@ -14,6 +14,6 @@ const SubscriptionsSchema = new mongoose.Schema({
     },
 });
 
-const Subscriptions = mongoose.model('Subscriptions', SubscriptionsSchema);
+const Subscription = mongoose.model('Subscription', SubscriptionSchema);
 
-module.exports = Subscriptions;
+module.exports = Subscription;

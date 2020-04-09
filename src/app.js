@@ -1,4 +1,5 @@
 'use strict'
+
 require('dotenv/config');
 const envFile = process.env.NODE_ENV === 'development' ? `.env.dev` : '.env';
 require("dotenv").config({ path: `./env/${envFile}` });
@@ -11,14 +12,14 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
+app.use(errors());
 
-
-//Carregando as Models
+//Load Models
 require('./App/User/Model/user');
 require('./App/Slideshow/Model/slideshow');
 require('./App/Transparency/Model/transparency');
-require('./App/Subscriptions/Model/subscriptions');
-
+require('./App/Subscription/Model/subscription');
+require('./App/Contact/Model/contact');
 
 app.use(function (req, res, next) {
   var origin = req.get('origin');
@@ -28,14 +29,18 @@ app.use(function (req, res, next) {
   next();
 });
 
-// Carrega as rotas
-app.use('/api/v1', require('./Routes/copyright'));
+//Load routes
+
+//Alterar rotas no front-end
 app.use('/api/v1/slideshow', require('./Routes/slideshowRouts'));
 app.use('/api/v1/transparency', require('./Routes/transparencyRouts'));
-app.use('/api/v1/user/', require('./Routes/userAuthRouter'));
-app.use('/api/v1/subscriptions', require('./Routes/subscriptionsRouts'));
 
-app.use(errors());
+//New standard
+app.use('/api/v1', require('./Routes/copyright'));
+app.use('/api/v1/subscription', require('./Routes/subscriptionRouts'));
+app.use('/api/v1/constact', require('./Routes/contactRouts'));
+app.use('/api/v1/user/', require('./Routes/userAuthRouter'));
+
 
 const PORT = process.env.PORT || 3333;
 app.listen(PORT, () => {});

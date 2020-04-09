@@ -1,0 +1,17 @@
+APP_NAME=IANSA
+
+APP_URL= Url app client
+
+AUTH= token MD5 
+
+MONGO_URL= Mongo Url
+
+MAIL_USER=User SensGred or Gmail
+MAIL_PASS=Password SensGred or Gmail
+
+Access key S3 amazon
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_DEFAULT_REGION=
+STORAGE_TYPE= 
+BUCKET_NAME=
