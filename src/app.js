@@ -5,6 +5,7 @@ require("dotenv").config({ path: `./env/${envFile}` });
 
 const express = require('express');
 const cors = require('cors');
+const { errors } = require('celebrate');
 
 const app = express();
 
@@ -33,6 +34,8 @@ app.use('/api/v1/slideshow', require('./Routes/slideshowRouts'));
 app.use('/api/v1/transparency', require('./Routes/transparencyRouts'));
 app.use('/api/v1/user/', require('./Routes/userAuthRouter'));
 app.use('/api/v1/subscriptions', require('./Routes/subscriptionsRouts'));
+
+app.use(errors());
 
 const PORT = process.env.PORT || 3333;
 app.listen(PORT, () => {});

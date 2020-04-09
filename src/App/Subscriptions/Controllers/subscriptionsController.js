@@ -1,22 +1,23 @@
 'use strict'
 require('dotenv/config');
-const repository = require('../Repositories/subscriptionsRepository')
+const repository = require('../Repositories/subscriptionsRepository');
 const mailer = require('../../../Modules/mailer');
 
 module.exports = {
   async create(req, res) {
-    try {
-      const subscriptions = {
-        email: req.body.email.trim(),
-        signup: req.body.signup,
-      };
+    const subscriptions = {
+      email: req.body.email.trim(),
+      signup: req.body.signup,
+    };
 
-      const email = await repository.getByEmail(subscriptions.email)
-      if (email) {
-        return res.json({
-          message: 'E-mail já registrado!'
+    try {
+
+      if (await repository.getByEmail(subscriptions.email)) {
+        return res.json({ 
+          message: 'E-mail já registrado!',
+          typeMessage: 'warning' 
         });
-      }
+      };
 
       await repository.post(subscriptions);
 
@@ -28,23 +29,23 @@ module.exports = {
         template: 'subs/subscriptions',
       }, (err) => {
         if (err)
-          return res.status(503).json({
-            message: err.message
-          });
+          console.log(err)
       });
 
       return res.json({
-        message: `Enviamos um e-mail para ${subscriptions.email} confirmando a inscrição :)`
+        message: `Enviamos um e-mail para ${subscriptions.email} confirmando a inscrição ;)`,
+        typeMessage: 'success'
       });
 
     } catch (error) {
       res.json({
-        error: `Erro oa inscrever-se - ${error}`
+        message: `Erro oa inscrever-se - ${error}`,
+        typeMessage: 'error'
       });
     }
   },
-  
+
   async index(req, res) {
-    return await repository.get();
+    return res.json(await repository.get());
   },
 };
