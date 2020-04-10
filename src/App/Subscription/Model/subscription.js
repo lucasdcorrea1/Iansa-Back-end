@@ -12,6 +12,10 @@ const SubscriptionSchema = new mongoose.Schema({
         required: true,
         lowercase: true,
     },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+      }
 });
 
 const Subscription = mongoose.model('Subscription', SubscriptionSchema);

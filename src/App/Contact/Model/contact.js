@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const ContactSchema = new mongoose.Schema({
     email: {
         type: String,
-        unique: true,
         required: true,
         lowercase: true,
     },
@@ -19,7 +18,11 @@ const ContactSchema = new mongoose.Schema({
         type: String,
         required: true,
         lowercase: true,
-    }
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+      }
 });
 
 const Contact = mongoose.model('Contact', ContactSchema);

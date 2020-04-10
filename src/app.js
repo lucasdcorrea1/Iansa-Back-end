@@ -12,7 +12,6 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-app.use(errors());
 
 //Load Models
 require('./App/User/Model/user');
@@ -20,6 +19,7 @@ require('./App/Slideshow/Model/slideshow');
 require('./App/Transparency/Model/transparency');
 require('./App/Subscription/Model/subscription');
 require('./App/Contact/Model/contact');
+require('./App/Job/Model/job');
 
 app.use(function (req, res, next) {
   var origin = req.get('origin');
@@ -39,8 +39,10 @@ app.use('/api/v1/transparency', require('./Routes/transparencyRouts'));
 app.use('/api/v1', require('./Routes/copyright'));
 app.use('/api/v1/subscription', require('./Routes/subscriptionRouts'));
 app.use('/api/v1/constact', require('./Routes/contactRouts'));
-app.use('/api/v1/user/', require('./Routes/userAuthRouter'));
+app.use('/api/v1/job', require('./Routes/jobRouts'));
+app.use('/api/v1/user', require('./Routes/userAuthRouter'));
 
+app.use(errors());
 
 const PORT = process.env.PORT || 3333;
 app.listen(PORT, () => {});
