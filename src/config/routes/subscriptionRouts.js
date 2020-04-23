@@ -2,8 +2,8 @@
 const express = require('express');
 const { celebrate, Segments, Joi } = require('celebrate');
 const router = express.Router();
-const controller = require('../api/Subscription/Controllers/subscriptionController');
-const authMiddleware = require('../middlewares/auth');
+const controller = require('../../api/Subscription/Controllers/subscriptionController');
+const authMiddleware = require('../../middlewares/auth');
 
 router.get("/", authMiddleware, controller.index);
 

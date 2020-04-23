@@ -1,11 +1,10 @@
 'use strict'
 const express = require('express');
-const multer = require("multer");
 const router = express.Router();
-
-const controller = require('../api/Slideshow/Controllers/slideshowController');
-const multerConfig = require("../middlewares/multer");
-const authMiddleware = require('../middlewares/auth');
+const multer = require("multer");
+const controller = require('../../api/Transparency/Controllers/transparency');
+const multerConfig = require("../../middlewares/multer");
+const authMiddleware = require('../../middlewares/auth');
 
 router.get("/",  controller.index);
 
