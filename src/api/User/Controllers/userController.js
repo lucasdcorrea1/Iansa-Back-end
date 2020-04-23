@@ -4,7 +4,7 @@ require('dotenv/config');
 const mailer = require('../../../modules/mailer');
 const authRepository = require('../../Auth/Repositories/authRepository');
 const jwtService = require('../../../helpers/jwtServices');
-const validations = require('../../../validations/validate');
+const validations = require('../../../util/validations/validate');
 
 module.exports = {
     async create(req, res) {
