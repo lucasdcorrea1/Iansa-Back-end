@@ -14,12 +14,12 @@ app.use(express.json());
 app.use(cors());
 
 //Load Models
-require('./app/User/Model/user');
-require('./app/Slideshow/Model/slideshow');
-require('./app/Transparency/Model/transparency');
-require('./app/Subscription/Model/subscription');
-require('./app/Contact/Model/contact');
-require('./app/Job/Model/job');
+require('./api/User/Model/user');
+require('./api/Slideshow/Model/slideshow');
+require('./api/Transparency/Model/transparency');
+require('./api/Subscription/Model/subscription');
+require('./api/Contact/Model/contact');
+require('./api/Job/Model/job');
 
 app.use(function (req, res, next) {
   var origin = req.get('origin');

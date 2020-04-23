@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const multer = require("multer");
-const controller = require('../app/Transparency/Controllers/transparency');
+const controller = require('../api/Transparency/Controllers/transparency');
 const multerConfig = require("../middlewares/multer");
 const authMiddleware = require('../middlewares/auth');
 

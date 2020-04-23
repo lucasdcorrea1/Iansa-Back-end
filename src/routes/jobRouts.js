@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const multer = require("multer");
-const controller = require('../app/Job/Controllers/jobControllers');
+const controller = require('../api/Job/Controllers/jobControllers');
 const multerConfig = require("../middlewares/multer");
 const authMiddleware = require('../middlewares/auth');
 
