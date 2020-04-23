@@ -1,0 +1,8 @@
+version: "3"
+services:
+  database:
+    image: mongo
+    environment:
+      - MONGO_URL=mongodb://localhost/iansa_backend
+    ports:
+      - '27017-27019:27017-27019'

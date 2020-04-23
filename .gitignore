@@ -8,3 +8,5 @@ package-lock.json
 yarn.lock
 
 server.json
+
+.vscode
