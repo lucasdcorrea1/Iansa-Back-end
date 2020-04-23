@@ -14,12 +14,12 @@ app.use(express.json());
 app.use(cors());
 
 //Load Models
-require('./App/User/Model/user');
-require('./App/Slideshow/Model/slideshow');
-require('./App/Transparency/Model/transparency');
-require('./App/Subscription/Model/subscription');
-require('./App/Contact/Model/contact');
-require('./App/Job/Model/job');
+require('./app/User/Model/user');
+require('./app/Slideshow/Model/slideshow');
+require('./app/Transparency/Model/transparency');
+require('./app/Subscription/Model/subscription');
+require('./app/Contact/Model/contact');
+require('./app/Job/Model/job');
 
 app.use(function (req, res, next) {
   var origin = req.get('origin');
@@ -32,15 +32,15 @@ app.use(function (req, res, next) {
 //Load routes
 
 //Alterar rotas no front-end
-app.use('/api/v1/slideshow', require('./Routes/slideshowRouts'));
-app.use('/api/v1/transparency', require('./Routes/transparencyRouts'));
+app.use('/api/v1/slideshow', require('./routes/slideshowRouts'));
+app.use('/api/v1/transparency', require('./routes/transparencyRouts'));
 
 //New standard
-app.use('/api/v1', require('./Routes/copyright'));
-app.use('/api/v1/subscription', require('./Routes/subscriptionRouts'));
-app.use('/api/v1/constact', require('./Routes/contactRouts'));
-app.use('/api/v1/job', require('./Routes/jobRouts'));
-app.use('/api/v1/user', require('./Routes/userAuthRouter'));
+app.use('/api/v1', require('./routes/copyright'));
+app.use('/api/v1/subscription', require('./routes/subscriptionRouts'));
+app.use('/api/v1/constact', require('./routes/contactRouts'));
+app.use('/api/v1/job', require('./routes/jobRouts'));
+app.use('/api/v1/user', require('./routes/userAuthRouter'));
 
 app.use(errors());
 
