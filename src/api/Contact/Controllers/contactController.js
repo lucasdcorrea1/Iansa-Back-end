@@ -1,5 +1,4 @@
 'use strict'
-require('dotenv/config');
 const repository = require('../Repositories/subscriptionRepository');
 const mailer = require('../../../modules/mailer');
 

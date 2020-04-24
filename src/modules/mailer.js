@@ -1,10 +1,10 @@
-require('dotenv/config');
 const path = require('path');
 const nodemailer = require('nodemailer');
 const hbs = require('nodemailer-express-handlebars');
+const Env = require( "../config/environment");
 
-const usr = process.env.MAIL_USER;
-const pass = process.env.MAIL_PASS;
+const usr = Env.mail_user;
+const pass = Env.mail_pass;
 
 const transport = nodemailer.createTransport({
   service: 'SendGrid',

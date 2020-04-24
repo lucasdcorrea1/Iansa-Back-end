@@ -1,10 +1,10 @@
 'use strict'
-require('dotenv/config');
 
 const mailer = require('../../../modules/mailer');
 const authRepository = require('../../Auth/Repositories/authRepository');
 const jwtService = require('../../../helpers/jwtServices');
 const validations = require('../../../util/validations/validate');
+const Env = require( "../../../config/environment");
 
 module.exports = {
     async create(req, res) {
@@ -35,7 +35,7 @@ module.exports = {
 
             mailer.sendMail({
                 to: `${userData.email}`,
-                bc: process.env.GMAIL_USER,
+                bc: Env.gmail_user,
                 from: '"Lucas, of IANSA" <ti@iansa.org.br>',
                 subject: `Hi ${name}, please confirm your email!`,
                 template: 'auth/verifyemail',

@@ -3,6 +3,8 @@ const path = require("path");
 const crypto = require("crypto");
 const aws = require("aws-sdk");
 const multerS3 = require("multer-s3");
+const Env = require( "../config/environment");
+
 
 const storageTypes = {
   local: multer.diskStorage({
@@ -21,7 +23,7 @@ const storageTypes = {
   }),
   s3: multerS3({
     s3: new aws.S3(),
-    bucket: process.env.BUCKET_NAME,
+    bucket: Env.bucket_name,
     contentType: multerS3.AUTO_CONTENT_TYPE,
     acl: "public-read",
     key: (req, file, cb) => {
@@ -38,7 +40,7 @@ const storageTypes = {
 
 module.exports = {
   dest: path.resolve(__dirname, "..", "..", "tmp", "uploads"),
-  storage: storageTypes[process.env.STORAGE_TYPE],
+  storage: storageTypes[Env.storage_type ],
   limits: {
     fileSize: 2 * 1024 * 1024
   },

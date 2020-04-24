@@ -1,5 +1,4 @@
 'use strict'
-require('dotenv/config');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
@@ -7,6 +6,7 @@ const crypto = require('crypto');
 const authRepository = require('../Repositories/authRepository');
 const jwtService = require('../../../helpers/jwtServices');
 const mailer = require('../../../modules/mailer');
+const Env = require( "../../../config/environment");
 
 module.exports = {
     async authenticate(req, res) {
@@ -45,7 +45,7 @@ module.exports = {
             token
         } = req.body;
 
-        jwt.verify(token, process.env.AUTH, (err, decoded) => {
+        jwt.verify(token, Env.auth, (err, decoded) => {
             if (err) return res.status(401).send(JSON.stringify('NO'));
 
             return res.status(200).send(JSON.stringify('OK'));
@@ -76,13 +76,13 @@ module.exports = {
 
             mailer.sendMail({
                 to: `${user.email}`,
-                bc: process.env.GMAIL_USER,
+                bc: Env.gmail_user,
                 from: '"IANSA" <ti@iansa.org.br>',
                 subject: `Ei, ${name}, você precisa alterar sua senha?`,
                 template: 'auth/forgotPassword',
                 context: {
                     name,
-                    link: `${process.env.APP_URL}resetpassword?token=${await jwtService.generateToken({
+                    link: `${Env.app_url}resetpassword?token=${await jwtService.generateToken({
                         id: user.id,
                     })}&passtoken=${token}`
                 },

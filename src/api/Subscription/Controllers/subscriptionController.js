@@ -1,7 +1,7 @@
 'use strict'
-require('dotenv/config');
 const repository = require('../Repositories/subscriptionRepository');
 const mailer = require('../../../modules/mailer');
+const Env = require( "../../../config/environment");
 
 module.exports = {
   async create(req, res) {
@@ -23,7 +23,7 @@ module.exports = {
 
       mailer.sendMail({
         to: `${subscriptionData.email}`,
-        bc: process.env.GMAIL_USER,
+        bc: Env.gmail_user,
         from: '"IANSA" <ti@iansa.org.br>',
         subject: `Obrigado por inscrever-se em nossa plataforma!`,
         template: 'subs/subscription',

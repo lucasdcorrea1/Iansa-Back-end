@@ -3,6 +3,7 @@ const aws = require('aws-sdk');
 const fs = require('fs');
 const path = require('path');
 const { promisify } = require('util');
+const Env = require( "../../../config/environment");
 
 const s3 = new aws.S3();
 
@@ -30,14 +31,14 @@ const slideshowSchema = new mongoose.Schema({
 
 slideshowSchema.pre('save', function () {
   if (!this.url) {
-    this.url = `${process.env.APP_URL}/files/${this.key}`;
+    this.url = `${Env.app_url}/files/${this.key}`;
   };
 });
 
 slideshowSchema.pre('remove', function () {
-  if (process.env.STORAGE_TYPE === 's3') {
+  if (Env.storage_type === 's3') {
     return s3.deleteObject({
-      Bucket: process.env.BUCKET_NAME,
+      Bucket: Env.bucket_name,
       Key: this.key,
     }).promise()
   } else {

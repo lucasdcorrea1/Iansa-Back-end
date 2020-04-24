@@ -1,9 +1,9 @@
 'use strict'
 
-require('dotenv/config');
 const envFile = process.env.NODE_ENV === 'development' ? `.env.dev` : '.env';
 require("dotenv").config({ path: `./env/${envFile}` });
 
+const Env = require( "./config/environment");
 const express = require('express');
 const cors = require('cors');
 const { errors } = require('celebrate');
@@ -20,6 +20,7 @@ require('./api/Transparency/Model/transparency');
 require('./api/Subscription/Model/subscription');
 require('./api/Contact/Model/contact');
 require('./api/Job/Model/job');
+require('./config/environment');
 
 app.use(function (req, res, next) {
   var origin = req.get('origin');
@@ -44,7 +45,7 @@ app.use('/api/v1/user', require('./config/routes/userAuthRouter'));
 
 app.use(errors());
 
-const PORT = process.env.PORT || 3333;
+const PORT = Env.port || 3333;
 app.listen(PORT, () => {});
 
 // module.exports = app;

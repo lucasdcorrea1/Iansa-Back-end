@@ -1,7 +1,7 @@
 
-require('dotenv/config');
 
 const jwt = require('jsonwebtoken');
+const Env = require( "../config/environment");
 
 module.exports = (req, res, next) => {
     const authHeader = req.headers.authorization;
@@ -11,7 +11,7 @@ module.exports = (req, res, next) => {
             error: 'No token provided'
         })
 
-    jwt.verify(authHeader, process.env.AUTH, (err, decoded) => {
+    jwt.verify(authHeader, Env.auth, (err, decoded) => {
         if (err) return res.status(401).send({
             error: 'Token invalid'
         });

@@ -1,10 +1,10 @@
 'use strict';
 
-require('dotenv/config');
 const express = require('express');
 const router = express.Router();
+const Env = require( "../../config/environment");
 
-var Development = [process.env.APP_NAME];
+var Development = [Env.projectName];
 Development.push({
    'Made by': 'Lucas Damas Corrês',
     GitHub: 'https://github.com/lucasdcorrea1'
