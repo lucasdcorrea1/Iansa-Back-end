@@ -13,14 +13,16 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-//Load Models
-require('./api/User/Model/user');
-require('./api/Slideshow/Model/slideshow');
-require('./api/Transparency/Model/transparency');
-require('./api/Subscription/Model/subscription');
-require('./api/Contact/Model/contact');
-require('./api/Job/Model/job');
+//Load Env
 require('./config/environment');
+
+//Load Models
+require('./models/user');
+require('./models/slideshow');
+require('./models/transparency');
+require('./models/subscription');
+require('./models/contact');
+require('./models/job');
 
 app.use(function (req, res, next) {
   var origin = req.get('origin');

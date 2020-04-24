@@ -3,24 +3,24 @@ const aws = require('aws-sdk');
 const fs = require('fs');
 const path = require('path');
 const { promisify } = require('util');
-const Env = require( "../../../config/environment");
+const Env = require( "../config/environment");
 
 const s3 = new aws.S3();
 
-const transparencySchema = new mongoose.Schema({
-  expirationDate: {
-    type: Date,
-    require: true,
-  },
-  title: {
+const jobSchema = new mongoose.Schema({
+  name: {
     type: String,
     require: true,
   },
-  description: {
+  email: {
     type: String,
     require: true,
   },
-  name: String,
+  message: {
+    type: String,
+    require: true,
+  },
+  nameFile: String,
   key: String,
   url: String,
   createdAt: {
@@ -29,13 +29,13 @@ const transparencySchema = new mongoose.Schema({
   }
 });
 
-transparencySchema.pre('save', function () {
+jobSchema.pre('save', function () {
   if (!this.url) {
     this.url = `${Env.app_url}/files/${this.key}`;
   };
 });
 
-transparencySchema.pre('remove', function () {
+jobSchema.pre('remove', function () {
   if (Env.storage_type === 's3') {
     return s3.deleteObject({
       Bucket: Env.bucket_name,
@@ -46,4 +46,4 @@ transparencySchema.pre('remove', function () {
   }
 });
 
-module.exports = mongoose.model('transparency', transparencySchema);
+module.exports = mongoose.model('Job', jobSchema);

@@ -1,4 +1,4 @@
-const transparencyModel = require('../Model/transparency');
+const transparencyModel = require('../../../models/transparency');
 const transparencyRepository = require('../Repositories/transparency')
 
 module.exports = {

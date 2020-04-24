@@ -1,5 +1,5 @@
 'use strict'
-const slideshowModel = require('../Model/slideshow');
+const slideshowModel = require('../../../models/slideshow');
 const slideshowRepository = require('../Repositories/slideshow');
 const validateDate = require('../../../util/validations/validateDate');
 
