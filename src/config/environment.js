@@ -10,12 +10,11 @@ const all = {
   port: process.env.PORT || 3333,
   projectName: pack.name,
   projectVersion: pack.version,
-  auth: process.env.AUTH,
-  gmail_user: process.env.GMAIL_USER,
-  mongo_url: process.env.MONGO_URL,
-  mail_user: process.env.MAIL_USER,
-  mail_pass: process.env.MAIL_PASS,
   app_url: process.env.APP_URL,
+  auth: process.env.AUTH,
+  mongo_url: process.env.MONGO_URL,
+  sendgrid_api_key: process.env.SENDGRID_API_KEY,
+  sendgrid_sender_email: process.env.SENDGRID_SENDER_EMAIL,
   bucket_name: process.env.BUCKET_NAME,
   storage_type: process.env.STORAGE_TYPE
 };

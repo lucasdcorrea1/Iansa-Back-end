@@ -2,15 +2,14 @@ const router = require("express").Router();
 
 const Env = require("../../config/environment");
 
-const Development = [Env.projectName];
-Development.push({
-  "Made by": "Lucas Damas Corrês",
-  GitHub: "https://github.com/lucasdcorrea1"
+const api = [];
+api.push({
+  name: Env.projectName,
+  version: Env.projectVersion,
+  date: new Date().toUTCString
 });
 
-const route = router.get("/", (req, res) => {
-  res.status(200).send({
-    Development
-  });
+const route = router.get("/", res => {
+  res.status(200).send(api);
 });
 module.exports = route;

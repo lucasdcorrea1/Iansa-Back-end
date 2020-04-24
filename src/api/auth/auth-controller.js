@@ -4,9 +4,10 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const authRepository = require("./auth-repository");
-const jwtService = require("../../helpers/jwtServices");
-const mailer = require("../../modules/mailer");
+const jwtService = require("../../util/auth/jwtServices");
+const emailService = require("../../util/email/email.service");
 const Env = require("../../config/environment");
+const EMAIL_MESSAGE_TYPES = require("../../util/email/email.types"); /*  */
 
 module.exports = {
   async authenticate(req, res) {
@@ -37,10 +38,8 @@ module.exports = {
 
   async authenticateToken(req, res) {
     const { token } = req.body;
-
     jwt.verify(token, Env.auth, err => {
       if (err) return res.status(401).send(JSON.stringify("NO"));
-
       return res.status(200).send(JSON.stringify("OK"));
     });
   },
@@ -53,8 +52,6 @@ module.exports = {
         return res.status(400).send({ error: "Usuário não encontrado!" });
 
       const token = crypto.randomBytes(20).toString("hex");
-      const { name } = user;
-
       const now = new Date();
       now.setHours(now.getHours() + 1);
       await authRepository.put(user.id, {
@@ -64,27 +61,20 @@ module.exports = {
         }
       });
 
-      mailer.sendMail(
-        {
-          to: `${user.email}`,
-          bc: Env.gmail_user,
-          from: '"IANSA" <ti@iansa.org.br>',
-          subject: `Ei, ${name}, você precisa alterar sua senha?`,
-          template: "auth/forgotPassword",
-          context: {
-            name,
-            link: `${
-              Env.app_url
-            }resetpassword?token=${await jwtService.generateToken({
-              id: user.id
-            })}&passtoken=${token}`
-          }
-        },
-        err => {
-          // eslint-disable-next-line no-console
-          if (err) console.log(err.message);
-        }
+      const { name } = user;
+      const link = `${
+        Env.app_url
+      }resetpassword?token=${await jwtService.generateToken({
+        id: user.id
+      })}&passtoken=${token}`;
+
+      await emailService.sendMail(
+        email,
+        EMAIL_MESSAGE_TYPES.RESET_PASSWORD,
+        name,
+        link
       );
+
       return res.json({
         sucess: `Enviamos o token de autorização para o e-mail ${email}`
       });
@@ -98,20 +88,7 @@ module.exports = {
   async resetPassword(req, res) {
     const { email, password } = req.body;
     const { passtoken } = req.headers;
-    const token = req.headers.authorization;
-
-    // eslint-disable-next-line no-console
-    console.log(passtoken);
-    // eslint-disable-next-line no-console
-    console.log(token);
-
     try {
-      if ((await jwtService.validateToken(token)) === false) {
-        return res.status(401).send({
-          message: "Invalid token!"
-        });
-      }
-
       const user = await authRepository.getUserReset({ email: email.trim() });
       const now = new Date();
 
@@ -123,13 +100,13 @@ module.exports = {
 
       if (passtoken.trim() !== user.passwordResetToken) {
         return res.status(400).send({
-          error: "Passtoken inválido!"
+          error: "Token inválido!"
         });
       }
 
       if (!now > user.passwordResetExpires) {
         return res.status(400).send({
-          error: "Passtoken expirado!"
+          error: "Token expirado!"
         });
       }
 

@@ -1,0 +1,202 @@
+{
+  "swagger": "2.0",
+  "paths": {
+    "/api/v1": {
+      "get": {
+        "summary": "/api/v1",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/api/v1/contact": {
+      "post": {
+        "summary": "/api/v1/contact",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/api/v1/slideshow": {
+      "get": {
+        "summary": "/api/v1/slideshow",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {}
+      },
+      "post": {
+        "summary": "/api/v1/slideshow",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/api/v1/slideshow/delete/{id}": {
+      "delete": {
+        "summary": "/api/v1/slideshow/delete/{id}",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/api/v1/job": {
+      "post": {
+        "summary": "/api/v1/job",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {}
+      },
+      "get": {
+        "summary": "/api/v1/job",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/api/v1/job/delete/{id}": {
+      "delete": {
+        "summary": "/api/v1/job/delete/{id}",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/api/v1/user/auth": {
+      "post": {
+        "summary": "/api/v1/user/auth",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/api/v1/user/forgotpassword": {
+      "post": {
+        "summary": "/api/v1/user/forgotpassword",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/api/v1/user/resetpassword": {
+      "put": {
+        "summary": "/api/v1/user/resetpassword",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/api/v1/user/register": {
+      "post": {
+        "summary": "/api/v1/user/register",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/api/v1/subscription": {
+      "get": {
+        "summary": "/api/v1/subscription",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {}
+      },
+      "post": {
+        "summary": "/api/v1/subscription",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/api/v1/transparency": {
+      "get": {
+        "summary": "/api/v1/transparency",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {}
+      },
+      "post": {
+        "summary": "/api/v1/transparency",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/api/v1/transparency/delete/{id}": {
+      "delete": {
+        "summary": "/api/v1/transparency/delete/{id}",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/foo/{name}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "description of a parameter"
+          }
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "iansa_backend",
+    "version": "1.0.1",
+    "license": {
+      "name": "ISC"
+    },
+    "description": "[Specification JSON](/api-spec)"
+  }
+}

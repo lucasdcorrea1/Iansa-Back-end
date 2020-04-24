@@ -4,7 +4,6 @@ const UserModel = mongoose.model("User");
 
 exports.get = async data => {
   const user = await UserModel.findOne(data);
-
   return user;
 };
 
@@ -27,8 +26,6 @@ exports.post = async data => {
 
 exports.put = async (id, data) => {
   const user = await UserModel.findByIdAndUpdate(id, data);
-  // await user.save();
-
   return user;
 };
 
@@ -37,6 +34,5 @@ exports.putPasswrd = async (user, password) => {
   user.passwordResetExpires = undefined;
   user.passwordResetToken = undefined;
   await user.save();
-
   return user;
 };

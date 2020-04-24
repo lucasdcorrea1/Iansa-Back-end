@@ -7,10 +7,8 @@
   },
   "rules": {
     "prettier/prettier": "error",
-    "lines-between-class-members": 0,
-    "import/prefer-default-export": ["off"],
-    "no-underscore-dangle": "off",
     "no-param-reassign":"off",
+    "object-shorthand": ["error", "always"],
     "import/order": [
       "error",
       {
@@ -34,10 +32,6 @@
         "object": false,
         "array": false
       }
-    ],
-    "react/destructuring-assignment": ["off"],
-    "no-nested-ternary": "off",
-    "react/no-did-update-set-state": ["off"],
-    "object-shorthand": ["error", "always"]
+    ]
   }
 }
