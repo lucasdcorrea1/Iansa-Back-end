@@ -1,14 +1,13 @@
-'use strict'
-const express = require('express');
-const router = express.Router();
+const router = require("express").Router();
 const multer = require("multer");
-const controller = require('./job-controller');
+
+const controller = require("./job-controller");
 const multerConfig = require("../../middlewares/multer");
-const authMiddleware = require('../../middlewares/auth');
+const authMiddleware = require("../../middlewares/auth");
 
 router.post("/", multer(multerConfig).single("file"), controller.create);
 
-router.get("/", authMiddleware,  controller.index);
+router.get("/", authMiddleware, controller.index);
 
 router.delete("/delete/:id", authMiddleware, controller.delete);
 

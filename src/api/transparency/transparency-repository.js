@@ -1,16 +1,16 @@
-'use strict';
-const mongoose = require('../../database');
-const slideshow = mongoose.model('transparency');
+const mongoose = require("../../database");
+
+const slideshow = mongoose.model("transparency");
 
 module.exports = {
-    async getAll(){
-        return await slideshow.find({}, {});
-    },
+  async getAll() {
+    await slideshow.find({}, {});
+  },
 
-    async post(data) {
-        const test = await slideshow.create({
-           data
-          });
-          return test;
-    },
+  async post(data) {
+    const test = await slideshow.create({
+      data
+    });
+    return test;
+  }
 };

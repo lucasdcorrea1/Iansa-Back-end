@@ -1,10 +1,11 @@
-const multer = require("multer");
-const path = require("path");
 const crypto = require("crypto");
+const path = require("path");
+
+const multer = require("multer");
 const aws = require("aws-sdk");
 const multerS3 = require("multer-s3");
-const Env = require( "../config/environment");
 
+const Env = require("../config/environment");
 
 const storageTypes = {
   local: multer.diskStorage({
@@ -40,7 +41,7 @@ const storageTypes = {
 
 module.exports = {
   dest: path.resolve(__dirname, "..", "..", "tmp", "uploads"),
-  storage: storageTypes[Env.storage_type ],
+  storage: storageTypes[Env.storage_type],
   limits: {
     fileSize: 2 * 1024 * 1024
   },

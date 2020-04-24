@@ -1,40 +1,42 @@
-'use strict';
-const mongoose = require('../../database');
-const userModel = mongoose.model('User');
+const mongoose = require("../../database");
 
-exports.get = async (data) => {
-    const user = await userModel.findOne(data);
+const UserModel = mongoose.model("User");
 
-    return user;
+exports.get = async data => {
+  const user = await UserModel.findOne(data);
+
+  return user;
 };
 
-exports.getUserAuth = async (data) => {
-    return await userModel.findOne(data).select('+password');
+exports.getUserAuth = async data => {
+  await UserModel.findOne(data).select("+password");
 };
 
-exports.getUserReset = async (data) => {
-    return await userModel.findOne(data).select('+password passwordResetToken passwordResetExpires');
+exports.getUserReset = async data => {
+  await UserModel.findOne(data).select(
+    "+password passwordResetToken passwordResetExpires"
+  );
 };
 
-exports.post = async (data) => {
-    const user = new userModel(data);
-    await user.save();
+exports.post = async data => {
+  const user = new UserModel(data);
+  await user.save();
 
-    return user.id
+  return user.id;
 };
 
 exports.put = async (id, data) => {
-    const user = await userModel.findByIdAndUpdate(id, data);
-    // await user.save();
+  const user = await UserModel.findByIdAndUpdate(id, data);
+  // await user.save();
 
-    return user;
+  return user;
 };
 
-exports.putPasswrd = async (user,password) => {
-    user.password = password;
-    user.passwordResetExpires = undefined;
-    user.passwordResetToken = undefined;
-    await user.save();
+exports.putPasswrd = async (user, password) => {
+  user.password = password;
+  user.passwordResetExpires = undefined;
+  user.passwordResetToken = undefined;
+  await user.save();
 
-    return user;
+  return user;
 };

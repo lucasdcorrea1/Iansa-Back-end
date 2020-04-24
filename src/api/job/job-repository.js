@@ -1,17 +1,16 @@
-'use strict';
-const mongoose = require('../../database');
-const jobsModel = mongoose.model('Job');
+const mongoose = require("../../database");
+
+const JobModel = mongoose.model("Job");
 
 module.exports = {
-	async get() {
-		return await jobsModel.find();
-	},
+  async get() {
+    await JobModel.find();
+  },
 
-	async post(data) {
-		const post = new jobsModel(data);
-		await post
-		.save();
-		
-		return post;
-	},
+  async post(data) {
+    const post = new JobModel(data);
+    await post.save();
+
+    return post;
+  }
 };

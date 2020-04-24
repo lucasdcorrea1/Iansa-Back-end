@@ -1,19 +1,16 @@
-'use strict';
+const router = require("express").Router();
 
-const express = require('express');
-const router = express.Router();
-const Env = require( "../../config/environment");
+const Env = require("../../config/environment");
 
-var Development = [Env.projectName];
+const Development = [Env.projectName];
 Development.push({
-   'Made by': 'Lucas Damas Corrês',
-    GitHub: 'https://github.com/lucasdcorrea1'
-})
+  "Made by": "Lucas Damas Corrês",
+  GitHub: "https://github.com/lucasdcorrea1"
+});
 
-
-const route = router.get('/', (req, res, next) => {
-    res.status(200).send({
-        Development
-    });
+const route = router.get("/", (req, res) => {
+  res.status(200).send({
+    Development
+  });
 });
 module.exports = route;

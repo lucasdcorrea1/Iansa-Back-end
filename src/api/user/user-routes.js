@@ -1,16 +1,15 @@
-'use strict'
-const express = require('express');
-const router = express.Router();
-const authController = require('../auth/auth-controller');
-const userController = require('./user-controller');
-const authMiddleware = require('../../middlewares/auth');
+const router = require("express").Router();
 
-router.post('/auth', authController.authenticate);
+const authController = require("../auth/auth-controller");
+const userController = require("./user-controller");
+const authMiddleware = require("../../middlewares/auth");
+
+router.post("/auth", authController.authenticate);
 // router.post('/authenticatetoken', authController.authenticateToken);
-router.post('/forgotpassword', authController.forgotPassword);
+router.post("/forgotpassword", authController.forgotPassword);
 
-router.put('/resetpassword', authController.resetPassword);
+router.put("/resetpassword", authController.resetPassword);
 
-router.post('/register', authMiddleware, userController.create);
+router.post("/register", authMiddleware, userController.create);
 
 module.exports = router;

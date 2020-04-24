@@ -1,20 +1,20 @@
-'use strict';
-const mongoose = require('../../database');
-const subscriptionModel = mongoose.model('Subscription');
+const mongoose = require("../../database");
+
+const SubscriptionModel = mongoose.model("Subscription");
 
 exports.get = async () => {
-    return await subscriptionModel.find();
+  await SubscriptionModel.find();
 };
 
-exports.getByEmail = async (email) => {
-    const subscription = await subscriptionModel.findOne({email});
+exports.getByEmail = async email => {
+  const subscription = await SubscriptionModel.findOne({ email });
 
-    return subscription;
+  return subscription;
 };
 
-exports.post = async (data) => {
-    const subscription = new subscriptionModel(data);
-    await subscription.save();
+exports.post = async data => {
+  const subscription = new SubscriptionModel(data);
+  await subscription.save();
 
-    return subscription;
+  return subscription;
 };

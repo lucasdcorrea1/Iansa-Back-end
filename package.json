@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon src/index.js",
-    "start": "cross-env NODE_ENV=production node src/index.js"
+    "start": "cross-env NODE_ENV=production node src/index.js",
+    "linter": "eslint .",
+    "linter:fix": "eslint . --fix"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +16,7 @@
     "aws": "0.0.3-2",
     "aws-sdk": "^2.602.0",
     "axios": "^0.19.0",
+    "babel-eslint": "^8.2.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "celebrate": "^12.0.1",
@@ -22,6 +25,18 @@
     "cross-env": "^7.0.2",
     "customer": "0.0.1",
     "dotenv": "^8.1.0",
+    "eslint": "^5.4.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^3.0.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-flowtype": "^3.2.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-promise": "^4.0.0",
+    "eslint-plugin-react": "^7.11.1",
+    "eslint-plugin-standard": "^3.1.0",
     "express": "^4.17.1",
     "fs": "^0.0.1-security",
     "jsonwebtoken": "^8.5.1",
@@ -32,6 +47,7 @@
     "nodemailer": "^6.3.0",
     "nodemailer-express-handlebars": "^3.1.0",
     "path": "^0.12.7",
+    "prettier": "^1.14.2",
     "validator": "^13.0.0"
   },
   "devDependencies": {

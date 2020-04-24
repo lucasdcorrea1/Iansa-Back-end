@@ -1,9 +1,15 @@
-const jobsRepository = require('./job-repository')
+const jobsRepository = require("./job-repository");
+const jobModel = require("../../models/job");
 
 module.exports = {
   async create(req, res) {
     try {
-      const { originalname: nameFile, size, key, location: url = "" } = req.file;
+      const {
+        originalname: nameFile,
+        size,
+        key,
+        location: url = ""
+      } = req.file;
       const { name, email, message } = req.body;
 
       const postData = {
@@ -22,20 +28,19 @@ module.exports = {
     } catch (error) {
       res.status(400).json({
         error: `Falha ao cadastrar job - ${error}`
-      })
-    };
+      });
+    }
+    return res.status(500).send(JSON.stringify("Erro ao criar job"));
   },
 
   async index(req, res) {
-    
-    return res.json({ message: 'Get jobs' });
+    return res.json({ message: "Get jobs" });
   },
 
   async delete(req, res) {
-    const post = await transparency.findById(req.params.id);
-    await post.remove()
+    const post = await jobModel.findById(req.params.id);
+    await post.remove();
 
-    return res.status(201).json({ message: 'Slideshow deletado' });
+    return res.status(201).json({ message: "Slideshow deletado" });
   }
-
 };
