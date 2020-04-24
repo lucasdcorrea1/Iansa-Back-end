@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const { celebrate, Segments, Joi } = require('celebrate');
-const controller = require('../../api/Contact/contactController');
+const controller = require('../../api/contact/contactController');
 const authMiddleware = require('../../middlewares/auth');
 
 router.get("/", authMiddleware, controller.index);

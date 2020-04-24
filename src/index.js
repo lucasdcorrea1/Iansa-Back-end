@@ -13,9 +13,6 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-//Load Env
-require('./config/environment');
-
 //Load Models
 require('./models/user');
 require('./models/slideshow');

@@ -1,7 +1,7 @@
 'use strict'
 
 const mailer = require('../../modules/mailer');
-const authRepository = require('../Auth/authRepository');
+const authRepository = require('../auth/authRepository');
 const jwtService = require('../../helpers/jwtServices');
 const validations = require('../../util/validations/validate');
 const Env = require( "../../config/environment");

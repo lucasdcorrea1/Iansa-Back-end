@@ -1,6 +1,6 @@
 'use strict'
 const slideshowModel = require('../../models/slideshow');
-const slideshowRepository = require('./slideshow');
+const slideshowRepository = require('./slideshowRepository');
 const validateDate = require('../../util/validations/validateDate');
 
 module.exports = {
