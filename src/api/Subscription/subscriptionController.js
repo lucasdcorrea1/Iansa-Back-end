@@ -1,7 +1,7 @@
 'use strict'
-const repository = require('../Repositories/subscriptionRepository');
-const mailer = require('../../../modules/mailer');
-const Env = require( "../../../config/environment");
+const repository = require('./subscriptionRepository');
+const mailer = require('../../modules/mailer');
+const Env = require( "../../config/environment");
 
 module.exports = {
   async create(req, res) {

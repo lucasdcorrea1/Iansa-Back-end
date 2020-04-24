@@ -1,7 +1,7 @@
 'use strict'
-const slideshowModel = require('../../../models/slideshow');
-const slideshowRepository = require('../Repositories/slideshow');
-const validateDate = require('../../../util/validations/validateDate');
+const slideshowModel = require('../../models/slideshow');
+const slideshowRepository = require('./slideshow');
+const validateDate = require('../../util/validations/validateDate');
 
 module.exports = {
   async create(req, res) {

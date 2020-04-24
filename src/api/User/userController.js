@@ -1,10 +1,10 @@
 'use strict'
 
-const mailer = require('../../../modules/mailer');
-const authRepository = require('../../Auth/Repositories/authRepository');
-const jwtService = require('../../../helpers/jwtServices');
-const validations = require('../../../util/validations/validate');
-const Env = require( "../../../config/environment");
+const mailer = require('../../modules/mailer');
+const authRepository = require('../Auth/authRepository');
+const jwtService = require('../../helpers/jwtServices');
+const validations = require('../../util/validations/validate');
+const Env = require( "../../config/environment");
 
 module.exports = {
     async create(req, res) {

@@ -1,5 +1,5 @@
 'use strict';
-const mongoose = require('../../../database');
+const mongoose = require('../../database');
 const jobsModel = mongoose.model('Job');
 
 module.exports = {

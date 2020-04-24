@@ -3,7 +3,7 @@ const express = require('express');
 const multer = require("multer");
 const router = express.Router();
 
-const controller = require('../../api/Slideshow/Controllers/slideshowController');
+const controller = require('../../api/Slideshow/slideshowController');
 const multerConfig = require("../../middlewares/multer");
 const authMiddleware = require('../../middlewares/auth');
 

@@ -1,5 +1,5 @@
-const transparencyModel = require('../../../models/transparency');
-const transparencyRepository = require('../Repositories/transparency')
+const transparencyModel = require('../../models/transparency');
+const transparencyRepository = require('./transparencyRepository')
 
 module.exports = {
   async create(req, res) {

@@ -1,5 +1,5 @@
 'use strict';
-const mongoose = require('../../../database');
+const mongoose = require('../../database');
 const userModel = mongoose.model('User');
 
 exports.get = async (data) => {
