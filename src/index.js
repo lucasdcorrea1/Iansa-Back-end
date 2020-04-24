@@ -32,15 +32,15 @@ app.use(function (req, res, next) {
 //Load routes
 
 //Alterar rotas no front-end
-app.use('/api/v1/slideshow', require('./config/routes/slideshowRouts'));
-app.use('/api/v1/transparency', require('./config/routes/transparencyRouts'));
+app.use('/api/v1/slideshow', require('./api/slideshow/slideshow-routes'));
+app.use('/api/v1/transparency', require('./api/transparency/transparency-routes'));
 
 //New standard
-app.use('/api/v1', require('./config/routes/copyright'));
-app.use('/api/v1/subscription', require('./config/routes/subscriptionRouts'));
-app.use('/api/v1/constact', require('./config/routes/contactRouts'));
-app.use('/api/v1/job', require('./config/routes/jobRouts'));
-app.use('/api/v1/user', require('./config/routes/userAuthRouter'));
+app.use('/api/v1', require('./api/copyright/copyright-routes'));
+app.use('/api/v1/subscription', require('./api/subscription/subscription-routes'));
+app.use('/api/v1/constact', require('./api/contact/contact-routes'));
+app.use('/api/v1/job', require('./api/job/job-routes'));
+app.use('/api/v1/user', require('./api/user/user-routes'));
 
 app.use(errors());
 

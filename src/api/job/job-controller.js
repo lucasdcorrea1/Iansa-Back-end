@@ -1,4 +1,4 @@
-const jobsRepository = require('./jobRepositories')
+const jobsRepository = require('./job-repository')
 
 module.exports = {
   async create(req, res) {

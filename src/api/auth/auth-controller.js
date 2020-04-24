@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 
-const authRepository = require('./authRepository');
+const authRepository = require('./auth-repository');
 const jwtService = require('../../helpers/jwtServices');
 const mailer = require('../../modules/mailer');
 const Env = require( "../../config/environment");

@@ -1,5 +1,5 @@
 'use strict'
-const repository = require('./subscriptionRepository');
+const repository = require('./subscription-repository');
 const mailer = require('../../modules/mailer');
 const Env = require( "../../config/environment");
 

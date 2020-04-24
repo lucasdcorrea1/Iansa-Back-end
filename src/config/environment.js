@@ -1,7 +1,7 @@
 'use strict'
 
 const Path = require("path");
-const pack = require("../../../package.json");
+const pack = require("../../package.json");
 
 // All configurations will extend these options
 // ============================================
