@@ -5,8 +5,6 @@ node_modules
 
 package-lock.json
 
-yarn.lock
+.vscode/settings.json
 
-server.json
-
-.vscode
+.build

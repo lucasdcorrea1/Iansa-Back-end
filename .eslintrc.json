@@ -9,6 +9,7 @@
     "prettier/prettier": "error",
     "no-param-reassign":"off",
     "object-shorthand": ["error", "always"],
+    "import/prefer-default-export":"off",
     "import/order": [
       "error",
       {

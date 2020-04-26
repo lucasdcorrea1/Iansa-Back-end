@@ -4,10 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon src/index.js",
-    "start": "cross-env NODE_ENV=production node src/index.js",
+    "debug": "cross-env NODE_ENV=development ",
+    "dev": "cross-env NODE_ENV=development nodemon src/index.js --exec babel-node",
+    "start": "cross-env NODE_ENV=production babel-node src/index.js",
     "linter": "eslint .",
-    "linter:fix": "eslint . --fix"
+    "linter:fix": "eslint . --fix",
+    "compile": "babel src --out-dir .build --source-maps --watch"
   },
   "keywords": [],
   "author": "",
@@ -51,6 +53,8 @@
     "validator": "^13.0.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
     "nodemon": "^2.0.2"
   }
 }
