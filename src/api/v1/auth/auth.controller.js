@@ -38,7 +38,7 @@ class AuthController {
 
   static async authenticateToken(req, res) {
     const { token } = req.body;
-    jwt.verify(token, Env.auth, err => {
+    jwt.verify(token, Env.auth.secret, err => {
       if (err) return res.status(401).send(JSON.stringify("NO"));
       return res.status(200).send(JSON.stringify("OK"));
     });
@@ -63,7 +63,7 @@ class AuthController {
 
       const { name } = user;
       const link = `${
-        Env.app_url
+        Env.app.url
       }resetpassword?token=${await jwtService.generateToken({
         id: user.id
       })}&passtoken=${token}`;

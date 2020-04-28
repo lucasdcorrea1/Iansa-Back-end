@@ -7,10 +7,10 @@ class EmailService {
   static async sendMail(to, emailType, name, link) {
     const email = await this.getEmailContext(emailType, name, link);
 
-    sendGridMail.setApiKey(Env.sendgrid_api_key);
+    sendGridMail.setApiKey(Env.sendgrid.api_key);
     const msg = {
       to,
-      from: Env.sendgrid_sender_email,
+      from: Env.sendgrid.sender_email,
       subject: email.subject,
       text: email.text,
       html: email.html

@@ -7,8 +7,8 @@ const router = express.Router();
 router.get("/", (req, res) => {
   const api = [];
   api.push({
-    name: Env.projectName,
-    version: Env.projectVersion,
+    name: Env.api.projectName,
+    version: Env.api.projectVersion,
     date: new Date().toUTCString()
   });
   return res.status(200).json(api);

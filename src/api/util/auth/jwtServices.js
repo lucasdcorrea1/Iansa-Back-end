@@ -4,7 +4,7 @@ import Env from "../../config/environment";
 
 class JWTServices {
   static async generateToken(params) {
-    return jwt.sign(params, Env.auth, {
+    return jwt.sign(params, Env.auth.secret, {
       expiresIn: 43200
     });
   }
@@ -12,7 +12,7 @@ class JWTServices {
   static async validateToken(token) {
     let valid = true;
 
-    jwt.verify(token, Env.auth, err => {
+    jwt.verify(token, Env.auth.secret, err => {
       if (err) {
         valid = false;
       }

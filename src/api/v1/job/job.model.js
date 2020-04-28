@@ -33,15 +33,15 @@ const jobSchema = new mongoose.Schema({
 
 jobSchema.pre("save", function save() {
   if (!this.url) {
-    this.url = `${Env.app_url}/files/${this.key}`;
+    this.url = `${Env.app.url}/files/${this.key}`;
   }
 });
 
 jobSchema.pre("remove", function remove() {
-  if (Env.storage_type === "s3") {
+  if (Env.storage.type === "s3") {
     return s3
       .deleteObject({
-        Bucket: Env.bucket_name,
+        Bucket: Env.storage.aws.bucket_name,
         Key: this.key
       })
       .promise();

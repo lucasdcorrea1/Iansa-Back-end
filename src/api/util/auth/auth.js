@@ -10,7 +10,7 @@ class Auth {
         error: "authorization not found"
       });
 
-    jwt.verify(authHeader, Env.auth, (err, decoded) => {
+    jwt.verify(authHeader, Env.auth.secret, (err, decoded) => {
       if (err)
         return res.status(401).send({
           error: "invalid token"
