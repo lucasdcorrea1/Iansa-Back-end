@@ -3,34 +3,33 @@ import mongoose from "../../config/database";
 const UserModel = mongoose.model("User");
 
 export default class CardDao {
-  async get(data) {
+  static async get(data) {
     const user = await UserModel.findOne(data);
     return user;
   }
 
-  async getUserAuth(data) {
+  static async getUserAuth(data) {
     await UserModel.findOne(data).select("+password");
   }
 
-  async getUserReset(data) {
+  static async getUserReset(data) {
     await UserModel.findOne(data).select(
       "+password passwordResetToken passwordResetExpires"
     );
   }
 
-  async post(data) {
+  static async post(data) {
     const user = new UserModel(data);
     await user.save();
-
-    return user.id;
+    return user;
   }
 
-  async put(id, data) {
+  static async put(id, data) {
     const user = await UserModel.findByIdAndUpdate(id, data);
     return user;
   }
 
-  async asyncputPasswrd(user, password) {
+  static async asyncputPasswrd(user, password) {
     user.password = password;
     user.passwordResetExpires = undefined;
     user.passwordResetToken = undefined;

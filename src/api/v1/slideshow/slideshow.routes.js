@@ -3,7 +3,7 @@ import multer from "multer";
 
 import controller from "./slideshow.controller";
 import multerConfig from "../../util/storage/multer.config";
-import Auth from "../../util/auth/auth";
+import Auth from "../../util/auth";
 
 const router = express.Router();
 

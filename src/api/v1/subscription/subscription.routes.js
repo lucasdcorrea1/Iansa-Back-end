@@ -2,7 +2,7 @@ import express from "express";
 import { celebrate, Joi } from "celebrate";
 
 import controller from "./subscription.controller";
-import authMiddleware from "../../util/auth/auth";
+import authMiddleware from "../../util/auth";
 
 const router = express.Router();
 

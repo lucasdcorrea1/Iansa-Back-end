@@ -1,6 +1,6 @@
 import { celebrate, Joi } from "celebrate";
 
-export const postContact = celebrate({
+export const postMessage = celebrate({
   body: Joi.object().keys({
     email: Joi.string()
       .required()

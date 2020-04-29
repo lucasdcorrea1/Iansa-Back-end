@@ -25,43 +25,32 @@ class EmailService {
     let text;
     let html;
     switch (emailType) {
-      case EMAIL_MESSAGE_TYPES.CONTACT:
-        subject = "Obrigado por nos enviar sua mensagem!";
+      case EMAIL_MESSAGE_TYPES.MESSAGE:
+        subject = "Obrigado pela mensagem!";
         html = fs
-          .readFileSync(
-            `${Env.api.root}/api/util/email/resources/htmls/contact.html`
-          )
+          .readFileSync(`${Env.api.root}/api/util/email/html/message.html`)
           .toString()
-          .replace("{{name}}", name);
-        break;
-      case EMAIL_MESSAGE_TYPES.SUBSCRIPTION:
-        subject = "Obrigado por se inscrever!";
-        html = fs
-          .readFileSync(
-            `${Env.api.root}/api/util/email/resources/htmls/subscription.html`
-          )
-          .toString()
-          .replace("{{name}}", name);
+          .replace("{{NAME}}", name);
         break;
       case EMAIL_MESSAGE_TYPES.VERIFY_EMAIL:
         subject = `Olá ${name}, por favor confirme seu email!`;
         html = fs
-          .readFileSync(
-            `${Env.api.root}/api/util/email/resources/htmls/subscription.html`
-          )
+          .readFileSync(`${Env.api.root}/api/util/email/html/verifyEmail.html`)
           .toString()
-          .replace("{{name}}", name)
-          .replace("{{link}}", link);
+          .replace("{{NAME}}", name)
+          .split("{{LINK}}")
+          .join(link);
         break;
       case EMAIL_MESSAGE_TYPES.FORGOT_PASSWORD:
-        subject = `Ei, ${name}, você precisa alterar sua senha?`;
+        subject = `Ei ${name}, precisa alterar sua senha?`;
         html = fs
           .readFileSync(
-            `${Env.api.root}/api/util/email/resources/htmls/forgotPassword.html`
+            `${Env.api.root}/api/util/email/html/forgotPassword.html`
           )
           .toString()
-          .replace("{{name}}", name)
-          .replace("{{link}}", link);
+          .replace("{{NAME}}", name)
+          .split("{{LINK}}")
+          .join(link);
         break;
       default:
         throw new Error();

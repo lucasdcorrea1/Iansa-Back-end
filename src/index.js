@@ -11,7 +11,7 @@ require("./api/v1/user/user.model");
 require("./api/v1/slideshow/slideshow.model");
 require("./api/v1/transparency/transparency.model");
 require("./api/v1/subscription/subscription.model");
-require("./api/v1/contact/contact.model");
+require("./api/v1/message/message.model");
 require("./api/v1/job/job.model");
 
 const app = express();
@@ -30,7 +30,7 @@ app.use((req, res, next) => {
 
 // routes
 app.use("/api/v1", require("./api/v1/copyright/copyright.routes").default);
-app.use("/api/v1", require("./api/v1/contact/contact.routes").default);
+app.use("/api/v1", require("./api/v1/message/message.routes").default);
 app.use("/api/v1", require("./api/v1/slideshow/slideshow.routes").default);
 app.use("/api/v1", require("./api/v1/job/job.routes").default);
 app.use("/api/v1", require("./api/v1/user/user.routes").default);
@@ -46,4 +46,4 @@ app.use(
 app.use(errors());
 
 expressOasGenerator.handleRequests();
-app.listen(process.env.PORT || 3333, () => {});
+app.listen(process.env.PORT || 3333, () => { });

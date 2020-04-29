@@ -1,52 +1,138 @@
-import authRepository from "./user.dao";
-import jwtService from "../../util/auth/jwtServices";
-import validations from "../../util/validations/email.validate";
+import crypto from "crypto";
+
+import bcrypt from "bcryptjs";
+
+import jwt from "../../util/auth/jwt";
+import env from "../../config/environment";
+import userRepository from "./user.dao";
 import emailService from "../../util/email/email.service";
 import EMAIL_MESSAGE_TYPES from "../../util/email/email.types";
+import {
+  okResponse,
+  badRequestResponse,
+  errorResponse
+} from "../../util/responses/base-response";
 
 class UserController {
-  static async create(req, res) {
+  static async registerUser(req, res) {
     try {
-      const userData = {
-        name: req.body.name.trim(),
-        email: req.body.email.trim(),
-        password: req.body.password
-      };
+      const name = req.body.name.trim();
+      const email = req.body.email.trim();
+      const password = req.body.password;
 
-      if (!validations.validateEmailAddress(userData.email))
-        return res.status(400).send({
-          error: "E-mail inválido"
-        });
+      const existingUser = await userRepository.get({ email });
+      if (existingUser) {
+        return badRequestResponse(res, "E-mail já cadastrado.");
+      }
 
-      const user = await authRepository.get({ email: userData.email });
-      if (user)
-        return res.status(400).send({
-          error: "Usuário já cadastrado"
-        });
-
-      const userId = await authRepository.post(userData);
-      const token = await jwtService.generateToken({
-        id: userId
+      const user = await userRepository.post({ name, email, password });
+      const token = await jwt.generateToken({
+        id: user.id
       });
+      const link = "https://google.com";
 
-      const { name, email } = userData;
-      const link = "link para confirmar email";
       await emailService.sendMail(
         email,
         EMAIL_MESSAGE_TYPES.VERIFY_EMAIL,
         name,
         link
       );
-
-      return res.status(200).send({
+      return okResponse(res, "Usuário cadastrado com sucesso.", {
         token
       });
     } catch (error) {
-      res.status(400).send({
-        error: `Erro oa realizar cadastro - ${error}`
-      });
+      return errorResponse(res, `Erro ao cadastrar usuário: ${error}.`);
     }
-    return res.status(500).send(JSON.stringify("Erro ao cadastrar usuario"));
+  }
+
+  static async authenticateUser(req, res) {
+    try {
+      const { email, password } = req.body;
+      const user = await userRepository.getUserAuth({ email: email.trim() });
+
+      if (!user) {
+        return badRequestResponse(res, "Usuário ou senha inválidos.");
+      }
+      if (!(await bcrypt.compare(password.trim(), user.password))) {
+        return badRequestResponse(res, "Usuário ou senha inválidos.");
+      }
+
+      const token = await jwt.generateToken({
+        id: user.id
+      });
+
+      return okResponse(res, "Usuário autenticado com sucesso.", {
+        name: user.name,
+        email: user.email,
+        token
+      });
+    } catch (error) {
+      return errorResponse(res, `Erro ao autenticar usuário: ${error}.`);
+    }
+  }
+
+  static async forgotPassword(req, res) {
+    try {
+      const { email } = req.body;
+      const user = await userRepository.get({ email: email.trim() });
+
+      if (!user) {
+        return badRequestResponse(res, "Usuário não encontrado.");
+      }
+
+      const passwordResetToken = crypto.randomBytes(20).toString("hex");
+      const passwordResetExpires = new Date().setHours(
+        new Date().getHours() + 1
+      );
+      await userRepository.put(user.id, {
+        $set: {
+          passwordResetToken,
+          passwordResetExpires
+        }
+      });
+
+      const { name } = user;
+      const token = await jwt.generateToken({ id: user.id });
+      const link = `${env.app.url}/resetpassword?token=${token}&passwordResetToken=${passwordResetToken}`;
+
+      await emailService.sendMail(
+        email,
+        EMAIL_MESSAGE_TYPES.FORGOT_PASSWORD,
+        name,
+        link
+      );
+
+      return okResponse(res, `E-mail enviado para: ${email}`);
+    } catch (error) {
+      return errorResponse(res, `Erro ao solicitar troca de senha: ${error}.`);
+    }
+  }
+
+  static async resetPassword(req, res) {
+    try {
+      const { email, password } = req.body;
+      const { passwordResetToken } = req.headers;
+      const user = await userRepository.getUserReset({ email: email.trim() });
+
+      if (!user) {
+        return badRequestResponse(res, "Usuário inválido.");
+      }
+      if (passwordResetToken.trim() !== user.passwordResetToken) {
+        return badRequestResponse(res, "Token inválido.");
+      }
+      if (!new Date() > user.passwordResetExpires) {
+        return badRequestResponse(res, "Token expirado.");
+      }
+      if (await bcrypt.compare(password.trim(), user.password)) {
+        return badRequestResponse(res, "Utilize uma senha diferente da atual.");
+      }
+
+      await userRepository.putPasswrd(user, password);
+
+      return okResponse(res, "Senha atualizada com sucesso.");
+    } catch (error) {
+      return errorResponse(res, `Erro ao resetar senha: ${error}.`);
+    }
   }
 }
 

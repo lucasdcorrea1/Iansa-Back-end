@@ -3,14 +3,14 @@ import jwt from "jsonwebtoken";
 import Env from "../../config/environment";
 
 class Auth {
-  static AuthMiddleware(req, res, next) {
-    const authHeader = req.headers.authorization;
-    if (!authHeader)
+  static AuthenticateMiddleware(req, res, next) {
+    const authorization = req.headers.authorization;
+    if (!authorization)
       return res.status(401).send({
         error: "authorization not found"
       });
 
-    jwt.verify(authHeader, Env.auth.secret, (err, decoded) => {
+    jwt.verify(authorization, Env.auth.secret, (err, decoded) => {
       if (err)
         return res.status(401).send({
           error: "invalid token"
@@ -24,4 +24,4 @@ class Auth {
     });
   }
 }
-export default Auth.AuthMiddleware;
+export default Auth.AuthenticateMiddleware;

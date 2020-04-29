@@ -9,7 +9,7 @@
     "start": "cross-env NODE_ENV=production babel-node src/index.js",
     "linter": "eslint .",
     "linter:fix": "eslint . --fix",
-    "compile": "babel src --out-dir .build --source-maps --watch"
+    "compile": "rm -rf .build && babel src --out-dir .build --source-maps --watch"
   },
   "keywords": [],
   "author": "",
@@ -39,6 +39,7 @@
     "express": "^4.17.1",
     "express-oas-generator": "^1.0.23",
     "fs": "^0.0.1-security",
+    "http-status": "^1.4.2",
     "joi": "^14.3.1",
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^2.2.0",

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const ContactSchema = new mongoose.Schema({
+const MessageSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
@@ -25,4 +25,4 @@ const ContactSchema = new mongoose.Schema({
   }
 });
 
-export default mongoose.model("Contact", ContactSchema);
+export default mongoose.model("Message", MessageSchema);

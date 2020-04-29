@@ -3,7 +3,7 @@ import express from "express";
 
 import controller from "./transparency.controller";
 import multerConfig from "../../util/storage/multer.config";
-import authMiddleware from "../../util/auth/auth";
+import authMiddleware from "../../util/auth";
 
 const router = express.Router();
 
