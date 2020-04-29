@@ -70,7 +70,7 @@ class AuthController {
 
       await emailService.sendMail(
         email,
-        EMAIL_MESSAGE_TYPES.RESET_PASSWORD,
+        EMAIL_MESSAGE_TYPES.FORGOT_PASSWORD,
         name,
         link
       );

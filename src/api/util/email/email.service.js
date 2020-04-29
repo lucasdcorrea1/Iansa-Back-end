@@ -1,3 +1,5 @@
+import fs from "fs";
+
 import sendGridMail from "@sendgrid/mail";
 
 import Env from "../../config/environment";
@@ -24,28 +26,45 @@ class EmailService {
     let html;
     switch (emailType) {
       case EMAIL_MESSAGE_TYPES.CONTACT:
-        subject = "Obrigado por enviar sua mensagem!";
-        text = "Nós recebemos sua mensagem, muito obrigado pelo contato.";
-        html = "<strong>and easy to do anywhere, even with Node.js</strong>";
+        subject = "Obrigado por nos enviar sua mensagem!";
+        html = fs
+          .readFileSync(
+            `${Env.api.root}/api/util/email/resources/htmls/contact.html`
+          )
+          .toString()
+          .replace("{{name}}", name);
         break;
-      case EMAIL_MESSAGE_TYPES.RESET_PASSWORD:
-        subject = `Ei, ${name}, você precisa alterar sua senha?`;
-        text = `Para alterar sua senha acesse o link: ${link} `;
-        html = "<strong>and easy to do anywhere, even with Node.js</strong>";
-        break;
-      case EMAIL_MESSAGE_TYPES.SUBSCRIBER:
-        subject = "Obrigado por enviar sua mensagem!";
-        text = "Nós recebemos sua mensagem, muito obrigado pelo contato.";
-        html = "<strong>and easy to do anywhere, even with Node.js</strong>";
+      case EMAIL_MESSAGE_TYPES.SUBSCRIPTION:
+        subject = "Obrigado por se inscrever!";
+        html = fs
+          .readFileSync(
+            `${Env.api.root}/api/util/email/resources/htmls/subscription.html`
+          )
+          .toString()
+          .replace("{{name}}", name);
         break;
       case EMAIL_MESSAGE_TYPES.VERIFY_EMAIL:
         subject = `Olá ${name}, por favor confirme seu email!`;
-        text = `Para alterar sua senha acesse o link: ${link} `;
-        html = "<strong>and easy to do anywhere, even with Node.js</strong>";
+        html = fs
+          .readFileSync(
+            `${Env.api.root}/api/util/email/resources/htmls/subscription.html`
+          )
+          .toString()
+          .replace("{{name}}", name)
+          .replace("{{link}}", link);
         break;
-
+      case EMAIL_MESSAGE_TYPES.FORGOT_PASSWORD:
+        subject = `Ei, ${name}, você precisa alterar sua senha?`;
+        html = fs
+          .readFileSync(
+            `${Env.api.root}/api/util/email/resources/htmls/forgotPassword.html`
+          )
+          .toString()
+          .replace("{{name}}", name)
+          .replace("{{link}}", link);
+        break;
       default:
-        break;
+        throw new Error();
     }
     return { subject, text, html };
   }
