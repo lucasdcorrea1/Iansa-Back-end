@@ -1,13 +1,13 @@
-import transparencyModel from "./transparency.model";
-import transparencyRepository from "./transparency.dao";
+import accountabilityModel from "./accountability.model";
+import accountabilityRepository from "./accountability.dao";
 
-class TransparencyController {
+class AccountabilityController {
   static async create(req, res) {
     try {
       const { originalname: name, size, key, location: url = "" } = req.file;
       const { title, description } = req.body;
 
-      const post = await transparencyModel.create({
+      const post = await accountabilityModel.create({
         title,
         description,
         name,
@@ -27,7 +27,7 @@ class TransparencyController {
 
   static async index(req, res) {
     try {
-      const posts = await transparencyRepository.getAll();
+      const posts = await accountabilityRepository.getAll();
       const formatedPost = [];
 
       if (posts) {
@@ -55,11 +55,11 @@ class TransparencyController {
   }
 
   static async delete(req, res) {
-    const post = await transparencyModel.findById(req.params.id);
+    const post = await accountabilityModel.findById(req.params.id);
     await post.remove();
 
     return res.status(201).json({ message: "Slideshow deletado" });
   }
 }
 
-export default TransparencyController;
+export default AccountabilityController;

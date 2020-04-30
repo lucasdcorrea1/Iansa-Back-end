@@ -48,7 +48,7 @@ class UserController {
   static async authenticateUser(req, res) {
     try {
       const { email, password } = req.body;
-      const user = await userRepository.getUserAuth({ email: email.trim() });
+      const user = await userRepository.get({ email: email.trim() });
 
       if (!user) {
         return badRequestResponse(res, "Usuário ou senha inválidos.");
@@ -101,7 +101,6 @@ class UserController {
         name,
         link
       );
-
       return okResponse(res, `E-mail enviado para: ${email}`);
     } catch (error) {
       return errorResponse(res, `Erro ao solicitar troca de senha: ${error}.`);
@@ -111,8 +110,8 @@ class UserController {
   static async resetPassword(req, res) {
     try {
       const { email, password } = req.body;
-      const { passwordResetToken } = req.headers;
-      const user = await userRepository.getUserReset({ email: email.trim() });
+      const { passwordResetToken } = req.query;
+      const user = await userRepository.get({ email: email.trim() });
 
       if (!user) {
         return badRequestResponse(res, "Usuário inválido.");
@@ -128,7 +127,6 @@ class UserController {
       }
 
       await userRepository.putPasswrd(user, password);
-
       return okResponse(res, "Senha atualizada com sucesso.");
     } catch (error) {
       return errorResponse(res, `Erro ao resetar senha: ${error}.`);

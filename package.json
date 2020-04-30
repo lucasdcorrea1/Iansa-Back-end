@@ -9,7 +9,7 @@
     "start": "cross-env NODE_ENV=production babel-node src/index.js",
     "linter": "eslint .",
     "linter:fix": "eslint . --fix",
-    "compile": "rm -rf .build && babel src --out-dir .build --source-maps --watch"
+    "build": "rm -rf .build && babel src --out-dir .build --source-maps --copy-files && echo 'builded!'"
   },
   "keywords": [],
   "author": "",

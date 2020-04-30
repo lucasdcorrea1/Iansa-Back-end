@@ -1,8 +1,8 @@
 import mongoose from "../../config/database";
 
-const slideshow = mongoose.model("transparency");
+const slideshow = mongoose.model("accountability");
 
-export default class TransparencyDao {
+export default class AccountabilityDao {
   async getAll() {
     await slideshow.find({}, {});
   }

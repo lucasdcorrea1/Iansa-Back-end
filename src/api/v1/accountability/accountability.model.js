@@ -9,7 +9,7 @@ import Env from "../../config/environment";
 
 const s3 = new aws.S3();
 
-const transparencySchema = new mongoose.Schema({
+const accountabilitySchema = new mongoose.Schema({
   expirationDate: {
     type: Date,
     require: true
@@ -31,13 +31,13 @@ const transparencySchema = new mongoose.Schema({
   }
 });
 
-transparencySchema.pre("save", function save() {
+accountabilitySchema.pre("save", function save() {
   if (!this.url) {
     this.url = `${Env.app.url}/files/${this.key}`;
   }
 });
 
-transparencySchema.pre("remove", function remove() {
+accountabilitySchema.pre("remove", function remove() {
   if (Env.storage.type === "s3") {
     return s3
       .deleteObject({
@@ -51,4 +51,4 @@ transparencySchema.pre("remove", function remove() {
   );
 });
 
-export default mongoose.model("transparency", transparencySchema);
+export default mongoose.model("accountability", accountabilitySchema);

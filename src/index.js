@@ -9,7 +9,7 @@ require("dotenv").config({ path: `./env/${envFile}` });
 // models
 require("./api/v1/user/user.model");
 require("./api/v1/slideshow/slideshow.model");
-require("./api/v1/transparency/transparency.model");
+require("./api/v1/accountability/accountability.model");
 require("./api/v1/subscription/subscription.model");
 require("./api/v1/message/message.model");
 require("./api/v1/job/job.model");
@@ -40,10 +40,10 @@ app.use(
 );
 app.use(
   "/api/v1",
-  require("./api/v1/transparency/transparency.routes").default
+  require("./api/v1/accountability/accountability.routes").default
 );
 
 app.use(errors());
 
 expressOasGenerator.handleRequests();
-app.listen(process.env.PORT || 3333, () => { });
+app.listen(process.env.PORT || 3333, () => {});
