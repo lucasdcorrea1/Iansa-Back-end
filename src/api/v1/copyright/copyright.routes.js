@@ -1,10 +1,10 @@
-import express from "express";
+import express from 'express';
 
-import Env from "../../config/environment";
+import Env from '../../config/environment';
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
+router.get('/', (req, res) => {
   const api = [];
   api.push({
     name: Env.api.projectName,

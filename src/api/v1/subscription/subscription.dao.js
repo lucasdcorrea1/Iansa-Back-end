@@ -1,6 +1,6 @@
-import mongoose from "../../config/database";
+import mongoose from '../../config/database';
 
-const SubscriptionModel = mongoose.model("Subscription");
+const SubscriptionModel = mongoose.model('Subscription');
 
 export default class SubscriptionDao {
   async get() {

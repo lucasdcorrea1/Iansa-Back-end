@@ -1,6 +1,6 @@
-import mongoose from "../../config/database";
+import mongoose from '../../config/database';
 
-const slideshow = mongoose.model("accountability");
+const slideshow = mongoose.model('accountability');
 
 export default class AccountabilityDao {
   async getAll() {

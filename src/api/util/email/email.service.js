@@ -1,9 +1,9 @@
-import fs from "fs";
+import fs from 'fs';
 
-import sendGridMail from "@sendgrid/mail";
+import sendGridMail from '@sendgrid/mail';
 
-import Env from "../../config/environment";
-import EMAIL_MESSAGE_TYPES from "./email.types";
+import Env from '../../config/environment';
+import EMAIL_MESSAGE_TYPES from './email.types';
 
 class EmailService {
   static async sendMail(to, emailType, name, link) {
@@ -26,19 +26,19 @@ class EmailService {
     let html;
     switch (emailType) {
       case EMAIL_MESSAGE_TYPES.MESSAGE:
-        subject = "Obrigado pela mensagem!";
+        subject = 'Obrigado pela mensagem!';
         html = fs
           .readFileSync(`${Env.api.root}/api/util/email/html/message.html`)
           .toString()
-          .replace("{{NAME}}", name);
+          .replace('{{NAME}}', name);
         break;
       case EMAIL_MESSAGE_TYPES.VERIFY_EMAIL:
         subject = `Olá ${name}, por favor confirme seu email!`;
         html = fs
           .readFileSync(`${Env.api.root}/api/util/email/html/verifyEmail.html`)
           .toString()
-          .replace("{{NAME}}", name)
-          .split("{{LINK}}")
+          .replace('{{NAME}}', name)
+          .split('{{LINK}}')
           .join(link);
         break;
       case EMAIL_MESSAGE_TYPES.FORGOT_PASSWORD:
@@ -48,8 +48,8 @@ class EmailService {
             `${Env.api.root}/api/util/email/html/forgotPassword.html`
           )
           .toString()
-          .replace("{{NAME}}", name)
-          .split("{{LINK}}")
+          .replace('{{NAME}}', name)
+          .split('{{LINK}}')
           .join(link);
         break;
       default:

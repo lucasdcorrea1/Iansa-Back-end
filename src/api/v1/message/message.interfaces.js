@@ -1,4 +1,4 @@
-import { celebrate, Joi } from "celebrate";
+import { celebrate, Joi } from 'celebrate';
 
 export const postMessage = celebrate({
   body: Joi.object().keys({

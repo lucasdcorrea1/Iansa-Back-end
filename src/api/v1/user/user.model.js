@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import bcrypt from "bcryptjs";
+import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -34,11 +34,11 @@ const UserSchema = new mongoose.Schema({
   }
 });
 
-UserSchema.pre("save", async function save(next) {
+UserSchema.pre('save', async function save(next) {
   const hash = await bcrypt.hash(this.password, 10);
   this.password = hash;
 
   next();
 });
 
-export default mongoose.model("User", UserSchema);
+export default mongoose.model('User', UserSchema);

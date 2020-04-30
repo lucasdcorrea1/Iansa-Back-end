@@ -1,6 +1,6 @@
-import mongoose from "../../config/database";
+import mongoose from '../../config/database';
 
-const MessageModel = mongoose.model("Message");
+const MessageModel = mongoose.model('Message');
 
 export default class MessageDao {
   static async post(data) {

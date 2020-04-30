@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const MessageSchema = new mongoose.Schema({
   email: {
@@ -25,4 +25,4 @@ const MessageSchema = new mongoose.Schema({
   }
 });
 
-export default mongoose.model("Message", MessageSchema);
+export default mongoose.model('Message', MessageSchema);

@@ -1,10 +1,10 @@
-import messageRepository from "./message.dao";
-import emailService from "../../util/email/email.service";
-import EMAIL_MESSAGE_TYPES from "../../util/email/email.types";
-import { okResponse, errorResponse } from "../../util/responses/base-response";
+import messageRepository from './message.dao';
+import emailService from '../../util/email/email.service';
+import EMAIL_MESSAGE_TYPES from '../../util/email/email.types';
+import { buildResponse as Response } from '../../util/responses/base-response';
 
 class MessageController {
-  static async saveMessage(req, res) {
+  static async postMessage(req, res) {
     try {
       const email = req.body.email.trim();
       const name = req.body.name.trim();
@@ -20,9 +20,9 @@ class MessageController {
 
       await emailService.sendMail(email, EMAIL_MESSAGE_TYPES.MESSAGE, name);
 
-      return okResponse(res, "Mensagem salva com sucesso.");
+      return Response(res, 200, 'Mensagem salva com sucesso.');
     } catch (error) {
-      return errorResponse(res, `Erro ao salvar mensagem: ${error}.`);
+      return Response(res, 500, `Erro ao salvar mensagem: ${error}.`);
     }
   }
 }

@@ -1,15 +1,15 @@
-import express from "express";
-import { celebrate, Joi } from "celebrate";
+import express from 'express';
+import { celebrate, Joi } from 'celebrate';
 
-import controller from "./subscription.controller";
-import authMiddleware from "../../util/auth";
+import controller from './subscription.controller';
+import authMiddleware from '../../util/auth';
 
 const router = express.Router();
 
-router.get("/subscription", authMiddleware, controller.index);
+router.get('/subscription', authMiddleware, controller.index);
 
 router.post(
-  "/subscription",
+  '/subscription',
   celebrate({
     body: Joi.object().keys({
       email: Joi.string()

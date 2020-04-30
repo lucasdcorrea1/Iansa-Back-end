@@ -1,6 +1,6 @@
-import repository from "./subscription.dao";
-import emailService from "../../util/email/email.service";
-import EMAIL_MESSAGE_TYPES from "../../util/email/email.types";
+import repository from './subscription.dao';
+import emailService from '../../util/email/email.service';
+import EMAIL_MESSAGE_TYPES from '../../util/email/email.types';
 
 class SubscriptionController {
   static async create(req, res) {
@@ -12,8 +12,8 @@ class SubscriptionController {
     try {
       if (await repository.getByEmail(subscriptionData.email)) {
         return res.json({
-          message: "E-mail já registrado!",
-          typeMessage: "warning"
+          message: 'E-mail já registrado!',
+          typeMessage: 'warning'
         });
       }
 
@@ -26,15 +26,15 @@ class SubscriptionController {
 
       return res.json({
         message: `Enviamos um e-mail para ${subscriptionData.email} confirmando a inscrição ;)`,
-        typeMessage: "success"
+        typeMessage: 'success'
       });
     } catch (error) {
       res.json({
         message: `Erro ao inscrever-se - ${error}`,
-        typeMessage: "error"
+        typeMessage: 'error'
       });
     }
-    return res.status(500).send(JSON.stringify("Erro ao inscrever"));
+    return res.status(500).send(JSON.stringify('Erro ao inscrever'));
   }
 
   static async index(req, res) {

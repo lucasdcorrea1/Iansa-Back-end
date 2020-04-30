@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const SubscriptionSchema = new mongoose.Schema({
   signup: {
@@ -18,4 +18,4 @@ const SubscriptionSchema = new mongoose.Schema({
   }
 });
 
-export default mongoose.model("Subscription", SubscriptionSchema);
+export default mongoose.model('Subscription', SubscriptionSchema);

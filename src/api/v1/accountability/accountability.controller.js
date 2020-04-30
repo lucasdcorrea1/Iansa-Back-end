@@ -1,10 +1,10 @@
-import accountabilityModel from "./accountability.model";
-import accountabilityRepository from "./accountability.dao";
+import accountabilityModel from './accountability.model';
+import accountabilityRepository from './accountability.dao';
 
 class AccountabilityController {
   static async create(req, res) {
     try {
-      const { originalname: name, size, key, location: url = "" } = req.file;
+      const { originalname: name, size, key, location: url = '' } = req.file;
       const { title, description } = req.body;
 
       const post = await accountabilityModel.create({
@@ -22,7 +22,7 @@ class AccountabilityController {
         error: `Falha ao cadastrar novo post. ${error}`
       });
     }
-    return res.status(500).send(JSON.stringify("Erro ao cadastrar novo post"));
+    return res.status(500).send(JSON.stringify('Erro ao cadastrar novo post'));
   }
 
   static async index(req, res) {
@@ -51,14 +51,14 @@ class AccountabilityController {
         error: `Erro ao realizar busca - ${error}`
       });
     }
-    return res.status(500).send(JSON.stringify("Erro ao realizar busca"));
+    return res.status(500).send(JSON.stringify('Erro ao realizar busca'));
   }
 
   static async delete(req, res) {
     const post = await accountabilityModel.findById(req.params.id);
     await post.remove();
 
-    return res.status(201).json({ message: "Slideshow deletado" });
+    return res.status(201).json({ message: 'Slideshow deletado' });
   }
 }
 

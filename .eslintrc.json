@@ -2,37 +2,24 @@
   "parser": "babel-eslint",
   "extends": ["airbnb-base", "prettier"],
   "plugins": ["eslint-plugin-flowtype", "prettier"],
-  "env": {
-    "jest": true
-  },
+  "env": { "jest": true },
   "rules": {
-    "prettier/prettier": "error",
-    "no-param-reassign":"off",
-    "object-shorthand": ["error", "always"],
-    "import/prefer-default-export":"off",
-    "import/order": [
-      "error",
-      {
-        "newlines-between": "always",
-        "groups": ["builtin", "external"]
-      }
-    ],
-    "react/jsx-one-expression-per-line": ["off"],
+    "consistent-return": ["off"],
     "class-methods-use-this": ["off"],
     "global-require": ["off"],
-    "no-console": ["error"],
-    "no-multiple-empty-lines": [
+    "import/prefer-default-export": ["off"],
+    "import/order": [
       "error",
-      {
-        "max": 1
-      }
+      { "newlines-between": "always", "groups": ["builtin", "external"] }
     ],
-    "prefer-destructuring": [
-      "error",
-      {
-        "object": false,
-        "array": false
-      }
-    ]
+    "lines-between-class-members": 0,
+    "no-console": ["error"],
+    "no-underscore-dangle": "off",
+    "no-multiple-empty-lines": ["error", { "max": 1 }],
+    "no-param-reassign": "off",
+    "object-shorthand": ["error", "always"],
+    "no-nested-ternary": "off",
+    "prettier/prettier": ["error", { "singleQuote": true }],
+    "prefer-destructuring": ["error", { "object": false, "array": false }]
   }
 }

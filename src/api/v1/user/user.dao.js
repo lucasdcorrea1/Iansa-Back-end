@@ -1,6 +1,6 @@
-import mongoose from "../../config/database";
+import mongoose from '../../config/database';
 
-const UserModel = mongoose.model("User");
+const UserModel = mongoose.model('User');
 
 export default class UserDao {
   static async get(data) {

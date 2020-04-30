@@ -1,11 +1,11 @@
-import fs from "fs";
-import path from "path";
-import { promisify } from "util";
+import fs from 'fs';
+import path from 'path';
+import { promisify } from 'util';
 
-import mongoose from "mongoose";
-import aws from "aws-sdk";
+import mongoose from 'mongoose';
+import aws from 'aws-sdk';
 
-import Env from "../../config/environment";
+import Env from '../../config/environment';
 
 const s3 = new aws.S3();
 
@@ -31,14 +31,14 @@ const jobSchema = new mongoose.Schema({
   }
 });
 
-jobSchema.pre("save", function save() {
+jobSchema.pre('save', function save() {
   if (!this.url) {
     this.url = `${Env.app.url}/files/${this.key}`;
   }
 });
 
-jobSchema.pre("remove", function remove() {
-  if (Env.storage.type === "s3") {
+jobSchema.pre('remove', function remove() {
+  if (Env.storage.type === 's3') {
     return s3
       .deleteObject({
         Bucket: Env.storage.aws.bucket_name,
@@ -47,8 +47,8 @@ jobSchema.pre("remove", function remove() {
       .promise();
   }
   return promisify(fs.unlink)(
-    path.resolve(__dirname, "..", "..", "uploads", this.key)
+    path.resolve(__dirname, '..', '..', '..', 'uploads', this.key)
   );
 });
 
-export default mongoose.model("Job", jobSchema);
+export default mongoose.model('Job', jobSchema);
