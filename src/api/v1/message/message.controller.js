@@ -1,7 +1,7 @@
 import messageRepository from './message.dao';
-import emailService from '../../util/email/email.service';
-import EMAIL_MESSAGE_TYPES from '../../util/email/email.types';
-import { buildResponse as Response } from '../../util/responses/base-response';
+import emailService from '../../services/email/email.service';
+import emailMessageTypes from '../../services/email/email.types';
+import { buildResponse as Response } from '../../helpers/response';
 
 class MessageController {
   static async postMessage(req, res) {
@@ -18,7 +18,7 @@ class MessageController {
         message
       });
 
-      await emailService.sendMail(email, EMAIL_MESSAGE_TYPES.MESSAGE, name);
+      await emailService.sendMail(email, emailMessageTypes.MESSAGE, name);
 
       return Response(res, 200, 'Mensagem salva com sucesso.');
     } catch (error) {

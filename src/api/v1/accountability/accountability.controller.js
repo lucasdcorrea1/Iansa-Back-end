@@ -1,21 +1,28 @@
 import accountabilityDao from './accountability.dao';
-import * as multer from '../../util/storage/multer.config';
-import { buildResponse as Response } from '../../util/responses/base-response';
+import * as multer from '../../services/storage/multer.config';
+import { buildResponse as Response } from '../../helpers/response';
 
 class AccountabilityController {
   static async postAccountability(req, res) {
     try {
-      const { originalname: name, size, key, location: url = '' } = req.file;
-      const { expirationDate, title, description } = req.body;
+      const {
+        originalname: fileName,
+        size: fileSize,
+        key,
+        location: url = ''
+      } = req.file;
+
+      const { title, description, periodStart, periodEnd } = req.body;
 
       const accountability = await accountabilityDao.post({
         title,
         description,
-        name,
-        size,
+        periodStart,
+        periodEnd,
+        fileName,
+        fileSize,
         key,
-        url,
-        expirationDate
+        url
       });
 
       return Response(res, 201, 'Transparência cadastrada com sucesso', {
@@ -36,9 +43,10 @@ class AccountabilityController {
           formatedAccountability.push({
             id: item.id,
             title: item.title,
-            url: item.url,
             description: item.description,
-            name: item.name,
+            periodStart: item.periodStart,
+            periodEnd: item.periodEnd,
+            url: item.url,
             createdAt: `${item.createdAt.getDate() +
               1}/${item.createdAt.getMonth() +
               1}/${item.createdAt.getFullYear()}`
@@ -53,9 +61,15 @@ class AccountabilityController {
           formatedAccountability
         );
       }
-      return Response(res, 404, 'Nenhuma transparência encontrada');
+      return Response(res, 404, 'Nenhuma transparência encontrada', null, true);
     } catch (error) {
-      return Response(res, 500, `Erro ao buscar transparências: ${error}`);
+      return Response(
+        res,
+        500,
+        `Erro ao buscar transparências: ${error}`,
+        null,
+        true
+      );
     }
   }
 
@@ -67,9 +81,15 @@ class AccountabilityController {
         await multer.deleteFile(accountability);
         return Response(res, 200, 'Transparência deletada com sucesso');
       }
-      return Response(res, 404, 'Transparência não encontrada');
+      return Response(res, 404, 'Transparência não encontrada', null, true);
     } catch (error) {
-      return Response(res, 500, `Erro ao deletar transparência: ${error}`);
+      return Response(
+        res,
+        500,
+        `Erro ao deletar transparência: ${error}`,
+        null,
+        true
+      );
     }
   }
 }

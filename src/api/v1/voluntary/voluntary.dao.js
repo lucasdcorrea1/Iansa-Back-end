@@ -17,9 +17,9 @@ export default class SubscriptionDao {
     }
   }
 
-  static async getByEmail(email) {
+  static async getByUserId(userId) {
     try {
-      const voluntary = await VoluntaryModel.findOne({ email });
+      const voluntary = await VoluntaryModel.findOne({ userId });
       return voluntary;
     } catch (error) {
       return null;

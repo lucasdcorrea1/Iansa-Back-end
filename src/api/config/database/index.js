@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 
-import Env from '../environment';
+import env from '../environment';
 
-mongoose.connect(Env.mongo.url, {
+mongoose.connect(env.mongo.url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,

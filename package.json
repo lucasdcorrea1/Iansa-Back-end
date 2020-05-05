@@ -1,22 +1,21 @@
 {
   "name": "iansa_backend",
+  "license": "ISC",
+  "author": "",
   "version": "1.0.1",
   "description": "",
+  "keywords": [],
   "main": "index.js",
   "engines": {
     "node": "^12 || ^13"
   },
   "scripts": {
-    "debug": "cross-env NODE_ENV=development ",
     "dev": "cross-env NODE_ENV=development nodemon src/index.js --exec babel-node",
     "start": "cross-env NODE_ENV=production babel-node src/index.js",
     "linter": "eslint .",
     "linter:fix": "eslint . --fix",
     "build": "rm -rf .build && babel src --out-dir .build --source-maps --copy-files && echo 'builded!'"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@sendgrid/mail": "^7.0.1",
     "aws-sdk": "^2.602.0",
@@ -43,18 +42,12 @@
     "express-oas-generator": "^1.0.23",
     "fs": "^0.0.1-security",
     "http-status-codes": "^1.4.0",
-    "joi": "^14.3.1",
     "jsonwebtoken": "^8.5.1",
-    "jwt-decode": "^2.2.0",
-    "lodash": "^4.17.15",
     "mongoose": "^5.7.5",
     "multer": "^1.4.2",
     "multer-s3": "^2.9.0",
-    "nodemailer": "^6.3.0",
-    "nodemailer-express-handlebars": "^3.1.0",
     "path": "^0.12.7",
-    "prettier": "^1.14.2",
-    "validator": "^13.0.0"
+    "prettier": "^1.14.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

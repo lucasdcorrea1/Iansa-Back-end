@@ -1,7 +1,7 @@
 import express from 'express';
 
 import env from '../../config/environment';
-import { buildResponse as Response } from '../../util/responses/base-response';
+import { buildResponse as Response } from '../../helpers/response';
 
 const router = express.Router();
 

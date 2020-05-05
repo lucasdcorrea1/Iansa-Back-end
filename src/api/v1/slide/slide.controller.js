@@ -1,7 +1,7 @@
 import slideDao from './slide.dao';
-import * as multer from '../../util/storage/multer.config';
-import validateDate from '../../util/validations/date.validate';
-import { buildResponse as Response } from '../../util/responses/base-response';
+import validateDate from '../../helpers/date';
+import * as multer from '../../services/storage/multer.config';
+import { buildResponse as Response } from '../../helpers/response';
 
 class SlideShowController {
   static async postSlide(req, res) {
@@ -41,9 +41,9 @@ class SlideShowController {
       if (validSlides.length > 0) {
         return Response(res, 200, 'Slides encontrados', validSlides);
       }
-      return Response(res, 404, 'Nenhum slide encontrado');
+      return Response(res, 404, 'Nenhum slide encontrado', null, true);
     } catch (error) {
-      return Response(res, 500, `Erro ao buscar slides: ${error}`);
+      return Response(res, 500, `Erro ao buscar slides: ${error}`, null, true);
     }
   }
 
@@ -55,9 +55,9 @@ class SlideShowController {
         await multer.deleteFile(slide);
         return Response(res, 200, 'Slide deletado com sucesso');
       }
-      return Response(res, 404, 'Slide não encontrado');
+      return Response(res, 404, 'Slide não encontrado', null, true);
     } catch (error) {
-      return Response(res, 500, `Erro ao deletar slide: ${error}`);
+      return Response(res, 500, `Erro ao deletar slide: ${error}`, null, true);
     }
   }
 }

@@ -8,6 +8,15 @@ export default class UserDao {
     return user;
   }
 
+  static async getById(id) {
+    try {
+      const user = await UserModel.findById(id);
+      return user;
+    } catch (error) {
+      return null;
+    }
+  }
+
   static async post(data) {
     const user = new UserModel(data);
     await user.save();

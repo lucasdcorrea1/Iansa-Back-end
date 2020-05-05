@@ -3,11 +3,11 @@ import crypto from 'crypto';
 import bcrypt from 'bcryptjs';
 
 import userDao from './user.dao';
-import auth from '../../util/auth';
+import auth from '../../helpers/auth';
 import env from '../../config/environment';
-import emailService from '../../util/email/email.service';
-import EMAIL_MESSAGE_TYPES from '../../util/email/email.types';
-import { buildResponse as Response } from '../../util/responses/base-response';
+import emailService from '../../services/email/email.service';
+import emailMessageTypes from '../../services/email/email.types';
+import { buildResponse as Response } from '../../helpers/response';
 
 class UserController {
   static async singUp(req, res) {
@@ -27,7 +27,7 @@ class UserController {
 
       await emailService.sendMail(
         email,
-        EMAIL_MESSAGE_TYPES.VERIFY_EMAIL,
+        emailMessageTypes.VERIFY_EMAIL,
         name,
         verifyEmaillink
       );
@@ -89,7 +89,7 @@ class UserController {
 
       await emailService.sendMail(
         email,
-        EMAIL_MESSAGE_TYPES.FORGOT_PASSWORD,
+        emailMessageTypes.FORGOT_PASSWORD,
         name,
         resetPasswordLink
       );

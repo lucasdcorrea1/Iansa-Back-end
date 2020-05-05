@@ -1,16 +1,60 @@
 import mongoose from 'mongoose';
 
+const Schema = mongoose.Schema;
+
 const VoluntarySchema = new mongoose.Schema(
   {
-    email: {
-      type: String,
-      unique: true,
-      required: true,
-      lowercase: true
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
     },
-    active: {
-      type: Boolean,
-      require: true
+    status: {
+      type: String,
+      required: true
+    },
+    fullName: {
+      type: String,
+      required: true
+    },
+    cpf: {
+      type: Number,
+      required: true
+    },
+    zipCode: {
+      type: String,
+      required: true
+    },
+    address: {
+      type: String,
+      required: true
+    },
+    addressNumber: {
+      type: String,
+      required: true
+    },
+    city: {
+      type: String,
+      required: true
+    },
+    state: {
+      type: String,
+      required: true
+    },
+    birthDate: {
+      type: Date
+    },
+    gender: {
+      type: String
+    },
+    bloodType: {
+      type: String
+    },
+    mainActivity: {
+      type: String
+    },
+    description: {
+      type: String,
+      required: true
     },
     createdAt: {
       type: Date,

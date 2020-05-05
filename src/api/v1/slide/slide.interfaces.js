@@ -1,13 +1,12 @@
-import { celebrate, Joi } from 'celebrate';
+import { Joi } from 'celebrate';
 
-export const postSlide = celebrate({
-  body: Joi.object().keys({
-    expirationDate: Joi.date().required(),
-    title: Joi.string().required(),
-    description: Joi.string(),
-    name: Joi.string(),
-    size: Joi.number(),
-    key: Joi.string(),
-    url: Joi.string()
+export const postSlide = Joi.object()
+  .keys({
+    file: Joi.any().required(),
+    body: Joi.object().keys({
+      title: Joi.string().required(),
+      description: Joi.string().required(),
+      expirationDate: Joi.date().required()
+    })
   })
-});
+  .unknown(true);

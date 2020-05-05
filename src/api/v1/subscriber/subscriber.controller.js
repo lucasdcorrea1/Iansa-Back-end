@@ -1,7 +1,7 @@
 import subscriberDao from './subscriber.dao';
-import emailService from '../../util/email/email.service';
-import EMAIL_MESSAGE_TYPES from '../../util/email/email.types';
-import { buildResponse as Response } from '../../util/responses/base-response';
+import emailService from '../../services/email/email.service';
+import emailMessageTypes from '../../services/email/email.types';
+import { buildResponse as Response } from '../../helpers/response';
 
 class SubscriberController {
   static async postSubscriber(req, res) {
@@ -16,7 +16,7 @@ class SubscriberController {
       const unsubscribeLink = 'https://google.com';
       await emailService.sendMail(
         email,
-        EMAIL_MESSAGE_TYPES.SUBSCRIBER,
+        emailMessageTypes.SUBSCRIBER,
         null,
         unsubscribeLink
       );
@@ -32,9 +32,15 @@ class SubscriberController {
       if (subscribers && subscribers.length > 0) {
         return Response(res, 200, 'Inscritos encontrados', subscribers);
       }
-      return Response(res, 404, 'Nenhum inscrito encontrado');
+      return Response(res, 404, 'Nenhum inscrito encontrado', null, true);
     } catch (error) {
-      return Response(res, 500, `Erro ao buscar inscritos: ${error}`);
+      return Response(
+        res,
+        500,
+        `Erro ao buscar inscritos: ${error}`,
+        null,
+        true
+      );
     }
   }
 }

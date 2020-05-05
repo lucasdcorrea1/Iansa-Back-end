@@ -1,6 +1,6 @@
 import express from 'express';
 
-import Auth from '../../util/auth';
+import Auth from '../../helpers/auth';
 import subscriberController from './subscriber.controller';
 import * as subscriberInterfaces from './subscriber.interfaces';
 

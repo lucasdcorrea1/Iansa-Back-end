@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import { errors as celebrateErrors } from 'celebrate';
 import expressOasGenerator from 'express-oas-generator';
 
-import { buildResponse as Response } from './api/util/responses/base-response';
+import { buildResponse as Response } from './api/helpers/response';
 
 // set env
 const envFile = process.env.NODE_ENV === 'development' ? `.env.dev` : '.env';
@@ -26,7 +26,6 @@ expressOasGenerator.handleResponses(app, {});
 
 // configs
 app.use(bodyParser.json());
-app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
 
@@ -55,7 +54,7 @@ app.use(
 app.use(celebrateErrors());
 
 // not found resources
-app.use((req, res) => Response(res, 400, 'Recurso não encontrado'));
+app.use((req, res) => Response(res, 404, 'Recurso não encontrado', null, true));
 
 // docs requests
 expressOasGenerator.handleRequests();

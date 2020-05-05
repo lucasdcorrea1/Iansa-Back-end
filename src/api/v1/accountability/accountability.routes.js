@@ -1,17 +1,25 @@
 import express from 'express';
 
-import Auth from '../../util/auth';
+import Auth from '../../helpers/auth';
 import accountabilityController from './accountability.controller';
 import * as accountabilityInterfaces from './accountability.interfaces';
-import * as multer from '../../util/storage/multer.config';
+import * as multer from '../../services/storage/multer.config';
 
 const router = express.Router();
 
 router.post(
   '/accountability',
   Auth.authenticateToken,
-  multer.configMulter(),
-  accountabilityInterfaces.postAccountability,
+  multer.configMulterSingleFile(),
+  (req, res, next) => {
+    multer.validateSchema(
+      req,
+      res,
+      next,
+      accountabilityInterfaces.postAccountability,
+      'transparência'
+    );
+  },
   accountabilityController.postAccountability
 );
 

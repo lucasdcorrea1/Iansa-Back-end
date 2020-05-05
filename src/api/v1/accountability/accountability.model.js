@@ -12,11 +12,16 @@ const accountabilitySchema = new mongoose.Schema(
       type: String,
       require: true
     },
-    expirationDate: {
+    periodStart: {
       type: Date,
       require: true
     },
-    name: String,
+    periodEnd: {
+      type: Date,
+      require: true
+    },
+    fileName: String,
+    fileSize: Number,
     key: String,
     url: String,
     createdAt: {

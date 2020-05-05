@@ -4,7 +4,7 @@ import pack from '../../../../package.json';
 
 // All configurations will extend these options
 // ============================================
-const all = {
+const env = {
   api: {
     environment: process.env.NODE_ENV,
     projectName: pack.name,
@@ -38,7 +38,4 @@ const all = {
   }
 };
 
-// eslint-disable-next-line no-console
-// console.log(all);
-
-export default all;
+export default env;
