@@ -29,7 +29,7 @@ class SubscriberController {
   static async getSubscribers(req, res) {
     try {
       const subscribers = await subscriberDao.getAll();
-      if (subscribers.length > 0) {
+      if (subscribers && subscribers.length > 0) {
         return Response(res, 200, 'Inscritos encontrados', subscribers);
       }
       return Response(res, 404, 'Nenhum inscrito encontrado');

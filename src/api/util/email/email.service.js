@@ -61,8 +61,20 @@ class EmailService {
           .split('{{LINK}}')
           .join(link);
         break;
+      case EMAIL_MESSAGE_TYPES.VOLUNTARY:
+        subject = `Olá, obrigado por se voluntariar ao IANSA!`;
+        html = fs
+          .readFileSync(`${env.api.root}/api/util/email/html/voluntary.html`)
+          .toString()
+          .split('{{LINK}}')
+          .join(name)
+          .split('{{EMAIL}}')
+          .join(email)
+          .split('{{NAME}}')
+          .join(name);
+        break;
       default:
-        throw new Error();
+        throw new Error(`Type ${emailType}  not implemented`);
     }
     return { subject, text, html };
   }

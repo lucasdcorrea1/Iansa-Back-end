@@ -9,12 +9,20 @@ export default class SubscriptionDao {
   }
 
   static async getAll() {
-    const subscribers = await SubscriberModel.find();
-    return subscribers;
+    try {
+      const subscribers = await SubscriberModel.find();
+      return subscribers;
+    } catch (error) {
+      return null;
+    }
   }
 
   static async getByEmail(email) {
-    const subscriber = await SubscriberModel.findOne({ email });
-    return subscriber;
+    try {
+      const subscriber = await SubscriberModel.findOne({ email });
+      return subscriber;
+    } catch (error) {
+      return null;
+    }
   }
 }

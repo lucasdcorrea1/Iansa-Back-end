@@ -20,7 +20,6 @@ router.get('/slide', slideshowController.getSlides);
 router.delete(
   '/slide/:id',
   Auth.authenticateToken,
-  slideShowInterfaces.deleteSlide,
   slideshowController.deleteSlide
 );
 

@@ -1,19 +1,19 @@
 import mongoose from 'mongoose';
 
-import Env from '../../config/environment';
+import env from '../../config/environment';
 
 const SlideSchema = new mongoose.Schema(
   {
-    expirationDate: {
-      type: Date,
-      require: true
-    },
     title: {
       type: String,
       require: true
     },
     description: {
       type: String,
+      require: true
+    },
+    expirationDate: {
+      type: Date,
       require: true
     },
     name: String,
@@ -29,7 +29,7 @@ const SlideSchema = new mongoose.Schema(
 
 SlideSchema.pre('save', function save() {
   if (!this.url) {
-    this.url = `${Env.app.url}${Env.app.filesPath}/${this.key}`;
+    this.url = `${env.app.url}${env.app.filesPath}/${this.key}`;
   }
 });
 

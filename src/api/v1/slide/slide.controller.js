@@ -23,23 +23,23 @@ class SlideShowController {
         slide
       });
     } catch (error) {
-      return Response(res, 500, `Erro ao cadastrar slideshow: ${error}`);
+      return Response(res, 500, `Erro ao cadastrar slide: ${error}`);
     }
   }
 
   static async getSlides(req, res) {
     try {
       const slides = await slideDao.getAll();
-      const slidesValidos = [];
+      const validSlides = [];
       if (slides) {
         slides.forEach(item => {
           if (validateDate.compareDate(new Date(), item.expirationDate)) {
-            slidesValidos.push(item);
+            validSlides.push(item);
           }
         });
       }
-      if (slidesValidos.length > 0) {
-        return Response(res, 200, 'Slides encontrados', slidesValidos);
+      if (validSlides.length > 0) {
+        return Response(res, 200, 'Slides encontrados', validSlides);
       }
       return Response(res, 404, 'Nenhum slide encontrado');
     } catch (error) {

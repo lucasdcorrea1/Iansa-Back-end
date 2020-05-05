@@ -1,38 +1,39 @@
-import accountabilityModel from './accountability.model';
-import accountabilityRepository from './accountability.dao';
+import accountabilityDao from './accountability.dao';
+import * as multer from '../../util/storage/multer.config';
+import { buildResponse as Response } from '../../util/responses/base-response';
 
 class AccountabilityController {
-  static async create(req, res) {
+  static async postAccountability(req, res) {
     try {
       const { originalname: name, size, key, location: url = '' } = req.file;
-      const { title, description } = req.body;
+      const { expirationDate, title, description } = req.body;
 
-      const post = await accountabilityModel.create({
+      const accountability = await accountabilityDao.post({
         title,
         description,
         name,
         size,
         key,
-        url
+        url,
+        expirationDate
       });
 
-      return res.status(200).send(JSON.stringify(post));
-    } catch (error) {
-      res.status(400).send({
-        error: `Falha ao cadastrar novo post. ${error}`
+      return Response(res, 201, 'Transparência cadastrada com sucesso', {
+        accountability
       });
+    } catch (error) {
+      return Response(res, 500, `Erro ao cadastrar transparência: ${error}`);
     }
-    return res.status(500).send(JSON.stringify('Erro ao cadastrar novo post'));
   }
 
-  static async index(req, res) {
+  static async getAccountabilities(req, res) {
     try {
-      const posts = await accountabilityRepository.getAll();
-      const formatedPost = [];
+      const accountability = await accountabilityDao.getAll();
+      const formatedAccountability = [];
 
-      if (posts) {
-        posts.forEach(item => {
-          formatedPost.push({
+      if (accountability) {
+        accountability.forEach(item => {
+          formatedAccountability.push({
             id: item.id,
             title: item.title,
             url: item.url,
@@ -44,21 +45,32 @@ class AccountabilityController {
           });
         });
       }
-
-      return res.status(200).json(formatedPost);
+      if (formatedAccountability.length > 0) {
+        return Response(
+          res,
+          200,
+          'Transparências encontradas',
+          formatedAccountability
+        );
+      }
+      return Response(res, 404, 'Nenhuma transparência encontrada');
     } catch (error) {
-      res.status(400).send({
-        error: `Erro ao realizar busca - ${error}`
-      });
+      return Response(res, 500, `Erro ao buscar transparências: ${error}`);
     }
-    return res.status(500).send(JSON.stringify('Erro ao realizar busca'));
   }
 
   static async delete(req, res) {
-    const post = await accountabilityModel.findById(req.params.id);
-    await post.remove();
-
-    return res.status(201).json({ message: 'Slideshow deletado' });
+    try {
+      const accountability = await accountabilityDao.getById(req.params.id);
+      if (accountability) {
+        await accountabilityDao.delete(accountability);
+        await multer.deleteFile(accountability);
+        return Response(res, 200, 'Transparência deletada com sucesso');
+      }
+      return Response(res, 404, 'Transparência não encontrada');
+    } catch (error) {
+      return Response(res, 500, `Erro ao deletar transparência: ${error}`);
+    }
   }
 }
 
