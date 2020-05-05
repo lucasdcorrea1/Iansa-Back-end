@@ -1,24 +1,24 @@
 import express from 'express';
 
-import * as slideShowInterfaces from './slide.interfaces';
-import slideshowController from './slide.controller';
-import * as multer from '../../util/storage/multer.config';
 import Auth from '../../util/auth';
+import slideshowController from './slide.controller';
+import * as slideShowInterfaces from './slide.interfaces';
+import * as multer from '../../util/storage/multer.config';
 
 const router = express.Router();
 
 router.post(
-  '/slideshow',
+  '/slide',
   Auth.authenticateToken,
   multer.configMulter(),
   slideShowInterfaces.postSlide,
   slideshowController.postSlide
 );
 
-router.get('/slideshow', slideshowController.getSlides);
+router.get('/slide', slideshowController.getSlides);
 
 router.delete(
-  '/slideshow/:id',
+  '/slide/:id',
   Auth.authenticateToken,
   slideShowInterfaces.deleteSlide,
   slideshowController.deleteSlide

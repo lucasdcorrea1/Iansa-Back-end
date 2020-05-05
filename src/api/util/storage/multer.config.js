@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
-import { promisify } from 'util';
 
 import aws from 'aws-sdk';
 import multer from 'multer';

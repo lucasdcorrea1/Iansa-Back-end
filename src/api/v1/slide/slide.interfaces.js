@@ -14,6 +14,6 @@ export const postSlide = celebrate({
 
 export const deleteSlide = celebrate({
   params: Joi.object().keys({
-    id: Joi.string()
+    id: Joi.string().required()
   })
 });

@@ -10,7 +10,7 @@ require('dotenv').config({ path: `./env/${envFile}` });
 require('./api/v1/user/user.model');
 require('./api/v1/slide/slide.model');
 require('./api/v1/accountability/accountability.model');
-require('./api/v1/subscription/subscription.model');
+require('./api/v1/subscriber/subscriber.model');
 require('./api/v1/message/message.model');
 require('./api/v1/job/job.model');
 
@@ -30,15 +30,12 @@ app.use((req, res, next) => {
 });
 
 // routes
-app.use('/api/v1', require('./api/v1/copyright/copyright.routes').default);
+app.use('/api/v1', require('./api/v1/status/status.routes').default);
 app.use('/api/v1', require('./api/v1/message/message.routes').default);
 app.use('/api/v1', require('./api/v1/slide/slide.routes').default);
 app.use('/api/v1', require('./api/v1/job/job.routes').default);
 app.use('/api/v1', require('./api/v1/user/user.routes').default);
-app.use(
-  '/api/v1',
-  require('./api/v1/subscription/subscription.routes').default
-);
+app.use('/api/v1', require('./api/v1/subscriber/subscriber.routes').default);
 app.use(
   '/api/v1',
   require('./api/v1/accountability/accountability.routes').default

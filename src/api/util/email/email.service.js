@@ -2,17 +2,17 @@ import fs from 'fs';
 
 import sendGridMail from '@sendgrid/mail';
 
-import Env from '../../config/environment';
+import env from '../../config/environment';
 import EMAIL_MESSAGE_TYPES from './email.types';
 
 class EmailService {
   static async sendMail(to, emailType, name, link) {
-    const email = await this.getEmailContext(emailType, name, link);
+    const email = await this.getEmailContext(emailType, name, link, to);
 
-    sendGridMail.setApiKey(Env.sendgrid.api_key);
+    sendGridMail.setApiKey(env.sendgrid.api_key);
     const msg = {
       to,
-      from: Env.sendgrid.sender_email,
+      from: env.sendgrid.sender_email,
       subject: email.subject,
       text: email.text,
       html: email.html
@@ -20,7 +20,7 @@ class EmailService {
     await sendGridMail.send(msg);
   }
 
-  static async getEmailContext(emailType, name, link) {
+  static async getEmailContext(emailType, name, link, email) {
     let subject;
     let text;
     let html;
@@ -28,14 +28,14 @@ class EmailService {
       case EMAIL_MESSAGE_TYPES.MESSAGE:
         subject = 'Obrigado pela mensagem!';
         html = fs
-          .readFileSync(`${Env.api.root}/api/util/email/html/message.html`)
+          .readFileSync(`${env.api.root}/api/util/email/html/message.html`)
           .toString()
           .replace('{{NAME}}', name);
         break;
       case EMAIL_MESSAGE_TYPES.VERIFY_EMAIL:
         subject = `Olá ${name}, por favor confirme seu email!`;
         html = fs
-          .readFileSync(`${Env.api.root}/api/util/email/html/verifyEmail.html`)
+          .readFileSync(`${env.api.root}/api/util/email/html/verifyEmail.html`)
           .toString()
           .replace('{{NAME}}', name)
           .split('{{LINK}}')
@@ -45,10 +45,19 @@ class EmailService {
         subject = `Ei ${name}, precisa alterar sua senha?`;
         html = fs
           .readFileSync(
-            `${Env.api.root}/api/util/email/html/forgotPassword.html`
+            `${env.api.root}/api/util/email/html/forgotPassword.html`
           )
           .toString()
           .replace('{{NAME}}', name)
+          .split('{{LINK}}')
+          .join(link);
+        break;
+      case EMAIL_MESSAGE_TYPES.SUBSCRIBER:
+        subject = `Olá, bem vindo ao IANSA!`;
+        html = fs
+          .readFileSync(`${env.api.root}/api/util/email/html/subscriber.html`)
+          .toString()
+          .replace('{{EMAIL}}', email)
           .split('{{LINK}}')
           .join(link);
         break;

@@ -3,6 +3,9 @@
   "version": "1.0.1",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "^12 || ^13"
+  },
   "scripts": {
     "debug": "cross-env NODE_ENV=development ",
     "dev": "cross-env NODE_ENV=development nodemon src/index.js --exec babel-node",

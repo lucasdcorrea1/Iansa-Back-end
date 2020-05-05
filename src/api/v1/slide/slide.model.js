@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 import Env from '../../config/environment';
 
-const slideshowSchema = new mongoose.Schema(
+const SlideSchema = new mongoose.Schema(
   {
     expirationDate: {
       type: Date,
@@ -27,10 +27,10 @@ const slideshowSchema = new mongoose.Schema(
   { versionKey: false }
 );
 
-slideshowSchema.pre('save', function save() {
+SlideSchema.pre('save', function save() {
   if (!this.url) {
     this.url = `${Env.app.url}${Env.app.filesPath}/${this.key}`;
   }
 });
 
-export default mongoose.model('slideshow', slideshowSchema);
+export default mongoose.model('Slide', SlideSchema);

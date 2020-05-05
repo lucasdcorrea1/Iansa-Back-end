@@ -1,6 +1,6 @@
 import { celebrate, Joi } from 'celebrate';
 
-export const registerUser = celebrate({
+export const singUp = celebrate({
   body: Joi.object().keys({
     name: Joi.string().required(),
     email: Joi.string()
@@ -10,7 +10,7 @@ export const registerUser = celebrate({
   })
 });
 
-export const authenticateUser = celebrate({
+export const login = celebrate({
   body: Joi.object().keys({
     email: Joi.string()
       .email()

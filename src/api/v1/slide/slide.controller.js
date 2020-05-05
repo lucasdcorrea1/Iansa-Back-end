@@ -1,7 +1,7 @@
-import slideshowDao from './slide.dao';
+import slideDao from './slide.dao';
+import * as multer from '../../util/storage/multer.config';
 import validateDate from '../../util/validations/date.validate';
 import { buildResponse as Response } from '../../util/responses/base-response';
-import * as multer from '../../util/storage/multer.config';
 
 class SlideShowController {
   static async postSlide(req, res) {
@@ -9,7 +9,7 @@ class SlideShowController {
       const { originalname: name, size, key, location: url = '' } = req.file;
       const { expirationDate, title, description } = req.body;
 
-      const slide = await slideshowDao.post({
+      const slide = await slideDao.post({
         title,
         description,
         name,
@@ -19,7 +19,7 @@ class SlideShowController {
         expirationDate
       });
 
-      return Response(res, 201, 'Slideshow cadastrado com sucesso.', {
+      return Response(res, 201, 'Slideshow cadastrado com sucesso', {
         slide
       });
     } catch (error) {
@@ -29,7 +29,7 @@ class SlideShowController {
 
   static async getSlides(req, res) {
     try {
-      const slides = await slideshowDao.getAll();
+      const slides = await slideDao.getAll();
       const slidesValidos = [];
       if (slides) {
         slides.forEach(item => {
@@ -39,23 +39,23 @@ class SlideShowController {
         });
       }
       if (slidesValidos.length > 0) {
-        return Response(res, 200, 'Slides encontrados.', slidesValidos);
+        return Response(res, 200, 'Slides encontrados', slidesValidos);
       }
-      return Response(res, 404, 'Slides não encontrados.');
+      return Response(res, 404, 'Nenhum slide encontrado');
     } catch (error) {
-      return Response(res, 500, `Erro ao buscar slideshows: ${error}`);
+      return Response(res, 500, `Erro ao buscar slides: ${error}`);
     }
   }
 
   static async deleteSlide(req, res) {
     try {
-      const slide = await slideshowDao.getById(req.params.id);
+      const slide = await slideDao.getById(req.params.id);
       if (slide) {
-        await slideshowDao.delete(slide);
+        await slideDao.delete(slide);
         await multer.deleteFile(slide);
-        return Response(res, 200, 'Slide deletado com sucesso.');
+        return Response(res, 200, 'Slide deletado com sucesso');
       }
-      return Response(res, 404, 'Slide não encontrado.');
+      return Response(res, 404, 'Slide não encontrado');
     } catch (error) {
       return Response(res, 500, `Erro ao deletar slide: ${error}`);
     }
